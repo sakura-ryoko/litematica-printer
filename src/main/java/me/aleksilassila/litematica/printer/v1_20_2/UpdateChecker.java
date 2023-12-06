@@ -11,7 +11,7 @@ import com.google.gson.JsonParser;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class UpdateChecker {
-    public static final String version = FabricLoader.getInstance().getModContainer("litematica_printer").get()
+    public static final String version = FabricLoader.getInstance().getModContainer("litematica-printer").get()
             .getMetadata().getVersion()
             .getFriendlyString();
 

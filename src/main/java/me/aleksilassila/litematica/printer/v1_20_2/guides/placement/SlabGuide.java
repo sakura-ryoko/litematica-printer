@@ -1,14 +1,14 @@
 package me.aleksilassila.litematica.printer.v1_20_2.guides.placement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.aleksilassila.litematica.printer.v1_20_2.SchematicBlockState;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class SlabGuide extends GeneralPlacementGuide {
     public SlabGuide(SchematicBlockState state) {
@@ -17,10 +17,46 @@ public class SlabGuide extends GeneralPlacementGuide {
 
     @Override
     protected List<Direction> getPossibleSides() {
-        return Arrays.stream(Direction.values())
-                .filter(d -> d != (getRequiredHalf(state).getOpposite()) &&
-                        getProperty(state.offset(d).currentState, SlabBlock.TYPE).orElse(SlabType.DOUBLE) == SlabType.DOUBLE)
-                .toList();
+        /*
+         * return Arrays.stream(Direction.values())
+         * .filter(d -> d != (getRequiredHalf(state).getOpposite()) &&
+         * getProperty(state.offset(d).currentState,
+         * SlabBlock.TYPE).orElse(SlabType.DOUBLE) == SlabType.DOUBLE)
+         * .toList();
+         * }
+         */
+        // Pull From bruned12
+        List<Direction> resultList = new ArrayList<>();
+        SlabType targetSlabType = getProperty(state.targetState, SlabBlock.TYPE).orElse(SlabType.DOUBLE);
+
+        if (targetSlabType == SlabType.DOUBLE) {
+            return super.getPossibleSides();
+        }
+
+        Direction[] directionsToCheck = {
+                Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST
+        };
+
+        for (Direction direction : directionsToCheck) {
+            SlabType neighborSlabType = getProperty(state.offset(direction).currentState, SlabBlock.TYPE)
+                    .orElse(SlabType.DOUBLE);
+
+            if (neighborSlabType == SlabType.DOUBLE || neighborSlabType == targetSlabType) {
+                resultList.add(direction);
+            }
+        }
+
+        if (targetSlabType == SlabType.TOP || targetSlabType == SlabType.BOTTOM) {
+            Direction verticalDirection = targetSlabType == SlabType.TOP ? Direction.UP : Direction.DOWN;
+            SlabType neighborSlabType = getProperty(state.offset(verticalDirection).currentState, SlabBlock.TYPE)
+                    .orElse(SlabType.DOUBLE);
+
+            if (neighborSlabType == SlabType.DOUBLE || neighborSlabType != targetSlabType) {
+                resultList.add(verticalDirection);
+            }
+        }
+
+        return resultList;
     }
 
     @Override
