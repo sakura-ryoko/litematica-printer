@@ -63,14 +63,19 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
     }
 
     public void checkForUpdates() {
-        new Thread(() -> {
-            String version = UpdateChecker.version;
-            String newVersion = UpdateChecker.getPrinterVersion();
-
-            if (!version.equals(newVersion)) {
-                client.inGameHud.getChatHud().addMessage(Text.literal("New version of Litematica Printer available in https://github.com/aleksilassila/litematica-printer/releases"));
-            }
-        }).start();
+        /*
+         * DISABLED for fork
+         * new Thread(() -> {
+         * String version = UpdateChecker.version;
+         * String newVersion = UpdateChecker.getPrinterVersion();
+         * 
+         * if (!version.equals(newVersion)) {
+         * client.inGameHud.getChatHud().addMessage(Text.
+         * literal("New version of Litematica Printer available in https://github.com/aleksilassila/litematica-printer/releases"
+         * ));
+         * }
+         * }).start();
+         */
     }
 
     @Inject(method = "openEditSignScreen", at = @At("HEAD"), cancellable = true)

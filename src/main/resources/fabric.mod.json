@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "litematica_printer",
+  "id": "litematica-printer",
   "version": "${version}",
   "name": "Litematica Printer",
   "description": "A fork of Litematica that adds the missing printer functionality",
