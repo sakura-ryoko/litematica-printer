@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.aleksilassila.litematica.printer.v1_20_2.mixin",
+  "package": "me.aleksilassila.litematica.printer.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
   ],
