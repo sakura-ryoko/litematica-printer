@@ -1,14 +1,14 @@
 # Litematica Printer
 
+## TEMPORARY FORK FOR 1.20.2 / 1.20.3+ BUILDS ONLY. -- Sakura
+
 ![GitHub issues](https://img.shields.io/github/issues-raw/aleksilassila/litematica-printer)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/aleksilassila/litematica-printer)
 ![GitHub all releases](https://img.shields.io/github/downloads/aleksilassila/litematica-printer/total)
 ![GitHub Repo stars](https://img.shields.io/github/stars/aleksilassila/litematica-printer)
 
-This extension adds printing functionality for [Litematica fabric](https://github.com/maruohon/litematica) 1.19, 1.18
-and
-1.17 versions. Printer allows players to build
-big structures more quickly by automatically placing the correct blocks around you.
+This extension adds printing functionality for [Litematica fabric](https://github.com/maruohon/litematica).
+Printer allows players to build big structures more quickly by automatically placing the correct blocks around you.
 
 ![Demo](printer_demo.gif)
 
@@ -87,11 +87,3 @@ Also, if you know a better way to develop for multiple
 Minecraft versions that doesn't involve multiple git branches or hacky gradle scripts
 (perhaps a way to share common code between the implementations?), please let me know.
 
-Useful gradle tasks:
-
-- `[v1_19/v1_18/v1_17]:syncImplementations`
-    - Copy over common code to other implementations
-- `buildAll`
-    - Build all implementations and copy their jars to `build/` directory for easy distribution.
-- `[v1_19/v1_18/v1_17]:runClient`
-    - Start the target Minecraft version
