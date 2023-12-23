@@ -57,8 +57,7 @@ Currently, the following features are still broken or missing:
 
 - Placing liquids (printing **in** liquids works though)
 - Printing without support directly in air (printInAir)
-- Current algorithm for placing rails isn't perfect,
-  sometimes it can't place all the rails (to avoid placing anything incorrectly).
+- Current algorithm for placing rails isn't perfect, sometimes it can't place all the rails (to avoid placing anything incorrectly).
 - Legit mode? (for anticheats)
 
 Also, I have decided that features that fix existing builds,
@@ -86,4 +85,3 @@ so that it would be much easier to work with.
 Also, if you know a better way to develop for multiple
 Minecraft versions that doesn't involve multiple git branches or hacky gradle scripts
 (perhaps a way to share common code between the implementations?), please let me know.
-
