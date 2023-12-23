@@ -149,6 +149,13 @@ abstract public class PlacementGuide extends Guide {
             // } else {
             // return true;
             // }
+
+            /*
+             * boolean blockMovement = block != Blocks.COBWEB && block !=
+             * Blocks.BAMBOO_SAPLING && blockState.isSolid();
+             *
+             * this.solid; --> this.shouldBeSolid(); (private)
+             */
             return blockState.blocksMovement();
         }
 
