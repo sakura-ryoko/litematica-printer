@@ -1,6 +1,6 @@
 # Litematica Printer
 
-## TEMPORARY FORK FOR 1.20.2 / 1.20.3+ BUILDS ONLY. -- Sakura
+## TEMPORARY FORK FOR 1.20.2 - 1.20.4+ BUILDS ONLY. -- Sakura
 
 ![GitHub issues](https://img.shields.io/github/issues-raw/aleksilassila/litematica-printer)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/aleksilassila/litematica-printer)
