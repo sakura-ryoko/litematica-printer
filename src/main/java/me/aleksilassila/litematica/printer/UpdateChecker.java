@@ -15,23 +15,6 @@ public class UpdateChecker {
             .getMetadata().getVersion()
             .getFriendlyString();
 
-    // Try to get this to work at some point
-    // static {
-    // try (InputStream in =
-    // UpdateChecker.class.getResourceAsStream("/fabric.mod.json")) {
-    // String jsonString = IOUtils.toString(in, StandardCharsets.UTF_8);
-    // JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-    // System.out.println("JSON object: " + json);
-    // System.out.println("Raw json: " + jsonString);
-    // System.out.println("File: " + new
-    // File(UpdateChecker.class.getResource("/fabric.mod.json").getFile()));
-    // String version = json.get("version").getAsString();
-    // System.out.println("Reading fabric.mod.json");
-    // System.out.println("Parsed version: " + version);
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // }
 
     @SuppressWarnings("deprecation")
     public static String getPrinterVersion() {

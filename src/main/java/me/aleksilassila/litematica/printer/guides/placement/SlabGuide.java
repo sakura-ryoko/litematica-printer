@@ -17,14 +17,6 @@ public class SlabGuide extends GeneralPlacementGuide {
 
     @Override
     protected List<Direction> getPossibleSides() {
-        /*
-         * return Arrays.stream(Direction.values())
-         * .filter(d -> d != (getRequiredHalf(state).getOpposite()) &&
-         * getProperty(state.offset(d).currentState,
-         * SlabBlock.TYPE).orElse(SlabType.DOUBLE) == SlabType.DOUBLE)
-         * .toList();
-         * }
-         */
         // Pull From bruned12
         List<Direction> resultList = new ArrayList<>();
         SlabType targetSlabType = getProperty(state.targetState, SlabBlock.TYPE).orElse(SlabType.DOUBLE);

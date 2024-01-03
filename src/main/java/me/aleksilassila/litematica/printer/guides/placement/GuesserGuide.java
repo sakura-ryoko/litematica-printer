@@ -20,7 +20,7 @@ import net.minecraft.util.math.Vec3d;
  * This is the placement guide that most blocks will use.
  * It will try to predict the correct player state for producing the right
  * blockState
- * by brute forcing the correct hit vector and look direction.
+ * by brute forcing the correct hit vector and look a direction.
  */
 public class GuesserGuide extends GeneralPlacementGuide {
     private PrinterPlacementContext contextCache = null;

@@ -6,11 +6,11 @@
   "mixins": [
   ],
   "client": [
+    "AxeItemAccessor",
     "ConfigsMixin",
     "GuiConfigsMixin",
     "InputHandlerMixin",
-    "PlayerMoveC2SPacketMixin",
-    "AxeItemAccessor"
+    "PlayerMoveC2SPacketMixin"
   ],
   "injectors": {
     "defaultRequire": 1

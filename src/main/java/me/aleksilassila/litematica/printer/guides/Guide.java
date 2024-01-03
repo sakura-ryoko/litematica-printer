@@ -52,10 +52,8 @@ abstract public class Guide extends BlockHelperImpl {
         }
 
         Optional<ItemStack> requiredItem = getRequiredItem(player);
-        if (requiredItem.isEmpty())
-            return -1;
+        return requiredItem.map(itemStack -> getSlotWithItem(player, itemStack)).orElse(-1);
 
-        return getSlotWithItem(player, requiredItem.get());
     }
 
     public boolean canExecute(ClientPlayerEntity player) {
@@ -73,7 +71,7 @@ abstract public class Guide extends BlockHelperImpl {
     abstract protected @NotNull List<ItemStack> getRequiredItems();
 
     /**
-     * Returns the first required item that player has access to,
+     * Returns the first required item that the player has access to,
      * or empty if the items are inaccessible.
      */
     protected Optional<ItemStack> getRequiredItem(ClientPlayerEntity player) {

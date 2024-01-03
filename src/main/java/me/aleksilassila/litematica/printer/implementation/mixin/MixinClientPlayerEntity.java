@@ -2,8 +2,10 @@ package me.aleksilassila.litematica.printer.implementation.mixin;
 
 import java.util.Optional;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -27,10 +29,13 @@ import net.minecraft.network.packet.c2s.play.UpdateSignC2SPacket;
 @Mixin(ClientPlayerEntity.class)
 public class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
 
+    @Unique
     private static boolean didCheckForUpdates = false;
 
+    @Final
     @Shadow
     protected MinecraftClient client;
+    @Final
     @Shadow
     public ClientPlayNetworkHandler networkHandler;
 
@@ -62,6 +67,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
         }
     }
 
+    @Unique
     public void checkForUpdates() {
         /*
          * DISABLED!
@@ -92,6 +98,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
         });
     }
 
+    @Unique
     private Optional<SignBlockEntity> getTargetSignEntity(SignBlockEntity sign) {
         WorldSchematic worldSchematic = SchematicWorldHandler.getSchematicWorld();
         SchematicBlockState state = new SchematicBlockState(sign.getWorld(), worldSchematic, sign.getPos());

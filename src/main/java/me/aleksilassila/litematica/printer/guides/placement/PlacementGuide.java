@@ -82,7 +82,6 @@ abstract public class PlacementGuide extends Guide {
         ItemPlacementContext ctx = getPlacementContext(player);
         if (ctx == null || !ctx.canPlace())
             return false;
-        // if (!state.currentState.getMaterial().isReplaceable()) return false;
         if (!LitematicaMixinMod.REPLACE_FLUIDS_SOURCE_BLOCKS.getBooleanValue()
                 && getProperty(state.currentState, FluidBlock.LEVEL).orElse(1) == 0)
             return false;
@@ -133,7 +132,6 @@ abstract public class PlacementGuide extends Guide {
 
         return false;
     }
-
     private boolean canPlaceInWater(BlockState blockState) {
         Block block = blockState.getBlock();
         if (block instanceof FluidFillable) {
@@ -141,21 +139,13 @@ abstract public class PlacementGuide extends Guide {
         } else if (!(block instanceof DoorBlock) && !(blockState.getBlock() instanceof AbstractSignBlock)
                 && !blockState.isOf(Blocks.LADDER) && !blockState.isOf(Blocks.SUGAR_CANE)
                 && !blockState.isOf(Blocks.BUBBLE_COLUMN)) {
-            // Material material = blockState.getMaterial();
-            // if (material != Material.PORTAL && material != Material.STRUCTURE_VOID &&
-            // material != Material.UNDERWATER_PLANT && material !=
-            // Material.REPLACEABLE_UNDERWATER_PLANT) {
-            // return material.blocksMovement();
-            // } else {
-            // return true;
-            // }
-
             /*
              * boolean blockMovement = block != Blocks.COBWEB && block !=
              * Blocks.BAMBOO_SAPLING && blockState.isSolid();
              *
              * this.solid; --> this.shouldBeSolid(); (private)
              */
+
             return blockState.blocksMovement();
         }
 

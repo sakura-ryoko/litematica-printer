@@ -24,13 +24,6 @@ public class LitematicaMixinMod implements ModInitializer {
                         "Printing interval. Lower values mean faster printing speed.\nIf the printer creates \"ghost blocks\" or blocks are facing the wrong way, raise this value.");
         public static final ConfigDouble PRINTING_RANGE = new ConfigDouble("printingRange", 5, 2.5, 5,
                         "Printing block place range\nLower values are recommended for servers.");
-        // public static final ConfigBoolean PRINT_WATER = new
-        // ConfigBoolean("printWater", false, "Whether the printer should place water\n
-        // source blocks or make blocks waterlogged.");
-        // public static final ConfigBoolean PRINT_IN_AIR = new
-        // ConfigBoolean("printInAir", true, "Whether or not the printer should place
-        // blocks without anything to build on.\nBe aware that some anti-cheat plugins
-        // might notice this.");
         public static final ConfigBoolean PRINT_MODE = new ConfigBoolean("printingMode", false,
                         "Autobuild / print loaded selection.\nBe aware that some servers and anticheat plugins do not allow printing.");
         public static final ConfigBoolean REPLACE_FLUIDS_SOURCE_BLOCKS = new ConfigBoolean("replaceFluidSourceBlocks",
@@ -47,7 +40,6 @@ public class LitematicaMixinMod implements ModInitializer {
                 list.add(PRINT_MODE);
                 list.add(PRINTING_INTERVAL);
                 list.add(PRINTING_RANGE);
-                // list.add(PRINT_IN_AIR);
                 list.add(REPLACE_FLUIDS_SOURCE_BLOCKS);
                 list.add(STRIP_LOGS);
                 list.add(INTERACT_BLOCKS);

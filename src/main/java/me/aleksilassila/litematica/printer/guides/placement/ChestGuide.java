@@ -14,7 +14,7 @@ import net.minecraft.util.math.Direction;
  * Whilst making this guide, I learned that chests are much like humans.
  * Some prefer to stay single, and some want to connect with another of its
  * kind.
- * Also that reversing chest connection logic is an enormous pain in the ass. I
+ * Also, that reversing chest connection logic is an enormous pain in the ass. I
  * spent way too long on this.
  * Thanks for coming to my ted talk
  */
@@ -57,7 +57,7 @@ public class ChestGuide extends GeneralPlacementGuide {
             }
         }
 
-        // Place single chests if cannot connect any existing chests
+        // Place single chests if you cannot connect any existing chests
         if (sides.isEmpty()) {
             for (Direction direction : Direction.values()) {
                 if (!wantsToConnectToSide(state, direction) && !willConnectToSide(state, direction)) {
