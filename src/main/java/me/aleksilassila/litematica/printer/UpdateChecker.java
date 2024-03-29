@@ -8,14 +8,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import net.fabricmc.loader.api.FabricLoader;
-
+@Deprecated
 public class UpdateChecker {
-    public static final String version = FabricLoader.getInstance().getModContainer("litematica-printer").get()
-            .getMetadata().getVersion()
-            .getFriendlyString();
-
-
     @SuppressWarnings("deprecation")
     public static String getPrinterVersion() {
         try (InputStream inputStream = new URL("https://api.github.com/repos/aleksilassila/litematica-printer/tags")

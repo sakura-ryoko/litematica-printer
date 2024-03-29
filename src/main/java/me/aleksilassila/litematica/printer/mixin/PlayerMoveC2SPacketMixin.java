@@ -19,8 +19,7 @@ public class PlayerMoveC2SPacketMixin {
 
         PrepareAction action = printer.actionHandler.lookAction;
         if (action != null && action.modifyYaw) {
-            if (LitematicaMixinMod.DEBUG)
-                System.out.println("YAW: " + action.yaw);
+            Printer.printDebug("YAW: {}", action.yaw);
             return action.yaw;
         } else
             return yaw;
@@ -34,8 +33,7 @@ public class PlayerMoveC2SPacketMixin {
 
         PrepareAction action = printer.actionHandler.lookAction;
         if (action != null && action.modifyPitch) {
-            if (LitematicaMixinMod.DEBUG)
-                System.out.println("PITCH: " + action.pitch);
+            Printer.printDebug("PITCH: {}", action.pitch);
             return action.pitch;
         } else
             return pitch;

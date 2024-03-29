@@ -53,7 +53,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
         }
 
         if (LitematicaMixinMod.printer == null || LitematicaMixinMod.printer.player != clientPlayer) {
-            System.out.println("Initializing printer, player: " + clientPlayer + ", client: " + client);
+            Printer.printDebug("Initializing printer, player: {}, client: {}", clientPlayer, client);
             LitematicaMixinMod.printer = new Printer(client, clientPlayer);
         }
 
