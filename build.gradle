@@ -11,7 +11,10 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url 'https://maven.terraformersmc.com/releases/' }
+	maven {
+		url 'https://maven.terraformersmc.com/releases/'
+		mavenLocal()
+	}
 	maven {
 		url 'https://masa.dy.fi/maven'
 		mavenLocal()
