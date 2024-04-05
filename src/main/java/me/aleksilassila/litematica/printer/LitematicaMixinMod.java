@@ -27,7 +27,7 @@ public class LitematicaMixinMod implements ModInitializer {
         public static final ConfigBoolean PRINT_MODE = new ConfigBoolean("printingMode", false,
                         "Autobuild / print loaded selection.\nBe aware that some servers and anticheat plugins do not allow printing.");
         public static final ConfigBoolean PRINT_DEBUG = new ConfigBoolean("printingDebug", false,
-                "Enables Debug logging for printing.");
+                        "Enables Debug logging for printing.");
         public static final ConfigBoolean REPLACE_FLUIDS_SOURCE_BLOCKS = new ConfigBoolean("replaceFluidSourceBlocks",
                         true,
                         "Whether or not fluid source blocks should be replaced by the printer.");
