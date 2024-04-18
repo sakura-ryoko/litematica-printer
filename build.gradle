@@ -35,6 +35,7 @@ dependencies {
 
 	include(modApi(fabricApi.module("fabric-api-base", project.fabric_api_version)))
 	include(modApi(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
+	include(modApi(fabricApi.module("fabric-networking-api-v1", project.fabric_api_version)))
 
 	modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version_out}:${project.malilib_version}"
 	modImplementation "fi.dy.masa.litematica:litematica-fabric-${project.minecraft_version_out}:${project.litematica_version}"
