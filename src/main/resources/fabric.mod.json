@@ -31,7 +31,7 @@
   },
   "custom": {
     "modmenu": {
-      "parent": "malilib"
+      "parent": "litematica"
     }
   }
 }
