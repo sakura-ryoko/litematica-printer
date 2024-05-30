@@ -27,7 +27,7 @@
     "malilib": ">=0.18.999-snap",
     "litematica": ">=0.17.999-snap",
     "fabricloader": ">=0.15.11",
-    "minecraft": ">=1.20.6"
+    "minecraft": ">=1.21-beta.1"
   },
   "custom": {
     "modmenu": {
