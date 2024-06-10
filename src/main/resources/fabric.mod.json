@@ -24,10 +24,10 @@
     "litematica-printer-impl.mixins.json"
   ],
   "depends": {
-    "malilib": ">=0.18.999-snap",
-    "litematica": ">=0.17.999-snap",
+    "malilib": ">=0.18.999-sakura",
+    "litematica": ">=0.17.999-sakura",
     "fabricloader": ">=0.15.11",
-    "minecraft": ">=1.21-beta.3"
+    "minecraft": ">=1.21-rc.1"
   },
   "custom": {
     "modmenu": {
