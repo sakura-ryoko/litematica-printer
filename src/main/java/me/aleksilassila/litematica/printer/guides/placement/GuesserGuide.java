@@ -20,7 +20,7 @@ import net.minecraft.util.math.Vec3d;
  * This is the placement guide that most blocks will use.
  * It will try to predict the correct player state for producing the right
  * blockState
- * by brute forcing the correct hit vector and look direction.
+ * by brute forcing the correct hit vector and look a direction.
  */
 public class GuesserGuide extends GeneralPlacementGuide {
     private PrinterPlacementContext contextCache = null;
@@ -51,7 +51,7 @@ public class GuesserGuide extends GeneralPlacementGuide {
     @Nullable
     @Override
     public PrinterPlacementContext getPlacementContext(ClientPlayerEntity player) {
-        if (contextCache != null && !LitematicaMixinMod.DEBUG)
+        if (contextCache != null && !LitematicaMixinMod.PRINT_DEBUG.getBooleanValue())
             return contextCache;
 
         ItemStack requiredItem = getRequiredItem(player).orElse(ItemStack.EMPTY);

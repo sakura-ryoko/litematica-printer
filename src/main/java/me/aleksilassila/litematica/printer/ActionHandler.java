@@ -33,8 +33,7 @@ public class ActionHandler {
 
         Action nextAction = actionQueue.poll();
         if (nextAction != null) {
-            if (LitematicaMixinMod.DEBUG)
-                System.out.println("Sending action " + nextAction);
+            Printer.printDebug("Sending action {}", nextAction);
             nextAction.send(client, player);
         } else {
             lookAction = null;

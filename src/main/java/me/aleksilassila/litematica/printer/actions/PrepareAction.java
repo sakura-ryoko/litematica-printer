@@ -11,24 +11,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Direction;
 
 public class PrepareAction extends Action {
-    // public final Direction lookDirection;
-    // public final boolean requireSneaking;
-    // public final Item item;
-
-    // public PrepareAction(Direction lookDirection, boolean requireSneaking, Item
-    // item) {
-    // this.lookDirection = lookDirection;
-    // this.requireSneaking = requireSneaking;
-    // this.item = item;
-    // }
-    //
-    // public PrepareAction(Direction lookDirection, boolean requireSneaking,
-    // BlockState requiredState) {
-    // this(lookDirection, requireSneaking, requiredState.getBlock().asItem());
-    // }
-
     public final PrinterPlacementContext context;
-
     public boolean modifyYaw = true;
     public boolean modifyPitch = true;
     public float yaw = 0;

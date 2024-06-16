@@ -18,21 +18,16 @@ import net.fabricmc.api.ModInitializer;
 public class LitematicaMixinMod implements ModInitializer {
 
         public static Printer printer;
-        public static boolean DEBUG = false;
+
         // Config settings
         public static final ConfigInteger PRINTING_INTERVAL = new ConfigInteger("printingInterval", 12, 1, 40,
                         "Printing interval. Lower values mean faster printing speed.\nIf the printer creates \"ghost blocks\" or blocks are facing the wrong way, raise this value.");
         public static final ConfigDouble PRINTING_RANGE = new ConfigDouble("printingRange", 5, 2.5, 5,
                         "Printing block place range\nLower values are recommended for servers.");
-        // public static final ConfigBoolean PRINT_WATER = new
-        // ConfigBoolean("printWater", false, "Whether the printer should place water\n
-        // source blocks or make blocks waterlogged.");
-        // public static final ConfigBoolean PRINT_IN_AIR = new
-        // ConfigBoolean("printInAir", true, "Whether or not the printer should place
-        // blocks without anything to build on.\nBe aware that some anti-cheat plugins
-        // might notice this.");
         public static final ConfigBoolean PRINT_MODE = new ConfigBoolean("printingMode", false,
                         "Autobuild / print loaded selection.\nBe aware that some servers and anticheat plugins do not allow printing.");
+        public static final ConfigBoolean PRINT_DEBUG = new ConfigBoolean("printingDebug", false,
+                        "Enables Debug logging for printing.");
         public static final ConfigBoolean REPLACE_FLUIDS_SOURCE_BLOCKS = new ConfigBoolean("replaceFluidSourceBlocks",
                         true,
                         "Whether or not fluid source blocks should be replaced by the printer.");
@@ -45,9 +40,9 @@ public class LitematicaMixinMod implements ModInitializer {
         public static ImmutableList<IConfigBase> getConfigList() {
                 List<IConfigBase> list = new java.util.ArrayList<>(Configs.Generic.OPTIONS);
                 list.add(PRINT_MODE);
+                list.add(PRINT_DEBUG);
                 list.add(PRINTING_INTERVAL);
                 list.add(PRINTING_RANGE);
-                // list.add(PRINT_IN_AIR);
                 list.add(REPLACE_FLUIDS_SOURCE_BLOCKS);
                 list.add(STRIP_LOGS);
                 list.add(INTERACT_BLOCKS);
@@ -73,5 +68,7 @@ public class LitematicaMixinMod implements ModInitializer {
         public void onInitialize() {
                 TOGGLE_PRINTING_MODE.getKeybind()
                                 .setCallback(new KeyCallbackToggleBooleanConfigWithMessage(PRINT_MODE));
+
+                Printer.logger.info("{} initialized.", PrinterReference.MOD_STRING);
         }
 }

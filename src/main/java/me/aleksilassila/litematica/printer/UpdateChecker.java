@@ -8,31 +8,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import net.fabricmc.loader.api.FabricLoader;
-
+@Deprecated
 public class UpdateChecker {
-    public static final String version = FabricLoader.getInstance().getModContainer("litematica-printer").get()
-            .getMetadata().getVersion()
-            .getFriendlyString();
-
-    // Try to get this to work at some point
-    // static {
-    // try (InputStream in =
-    // UpdateChecker.class.getResourceAsStream("/fabric.mod.json")) {
-    // String jsonString = IOUtils.toString(in, StandardCharsets.UTF_8);
-    // JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-    // System.out.println("JSON object: " + json);
-    // System.out.println("Raw json: " + jsonString);
-    // System.out.println("File: " + new
-    // File(UpdateChecker.class.getResource("/fabric.mod.json").getFile()));
-    // String version = json.get("version").getAsString();
-    // System.out.println("Reading fabric.mod.json");
-    // System.out.println("Parsed version: " + version);
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // }
-
     @SuppressWarnings("deprecation")
     public static String getPrinterVersion() {
         try (InputStream inputStream = new URL("https://api.github.com/repos/aleksilassila/litematica-printer/tags")

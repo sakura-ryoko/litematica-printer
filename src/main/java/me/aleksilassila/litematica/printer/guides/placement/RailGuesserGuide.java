@@ -1,9 +1,6 @@
 package me.aleksilassila.litematica.printer.guides.placement;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import net.minecraft.block.BlockState;
@@ -73,25 +70,10 @@ public class RailGuesserGuide extends GuesserGuide {
         if (possibleConnections.size() > 2)
             return false;
 
-        return allowedConnections.containsAll(possibleConnections);
+        return new HashSet<>(allowedConnections).containsAll(possibleConnections);
     }
 
-    // private boolean wouldBlockAnotherConnection() {
-    // List<Direction> possibleConnections = new ArrayList<>();
-    //
-    // for (Direction d : Direction.values()) {
-    // if (d.getAxis().isVertical()) continue;
-    // SchematicBlockState neighbor = state.offset(d);
-    //
-    // if (couldConnectWrongly(neighbor)) {
-    // possibleConnections.add(d);
-    // }
-    // }
-    //
-    // return possibleConnections.size() > 1;
-    // }
-
-    private boolean hasFreeConnections(SchematicBlockState state) {
+     private boolean hasFreeConnections(SchematicBlockState state) {
         List<Direction> possibleConnections = getRailDirections(state);
         if (possibleConnections.isEmpty())
             return false;

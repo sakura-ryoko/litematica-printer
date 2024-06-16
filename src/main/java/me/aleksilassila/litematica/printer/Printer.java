@@ -3,6 +3,8 @@ package me.aleksilassila.litematica.printer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import fi.dy.masa.litematica.data.DataManager;
@@ -21,6 +23,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class Printer {
+    public static final Logger logger = LogManager.getLogger(PrinterReference.MOD_ID);
     @NotNull
     public final ClientPlayerEntity player;
 
@@ -64,7 +67,7 @@ public class Printer {
             for (Guide guide : guides) {
                 // Add INTERACT_BLOCKS pull by DarkReaper231
                 if (guide.canExecute(player) && LitematicaMixinMod.INTERACT_BLOCKS.getBooleanValue()) {
-                    System.out.println("Executing " + guide + " for " + state);
+                    printDebug("Executing {} for {}", guide, state);
                     List<Action> actions = guide.execute(player);
                     actionHandler.addActions(actions.toArray(Action[]::new));
                     return true;
@@ -110,5 +113,26 @@ public class Printer {
                     double bDistance = this.player.getPos().squaredDistanceTo(Vec3d.ofCenter(b));
                     return Double.compare(aDistance, bDistance);
                 }).toList();
+    }
+
+    public static String getModVersionString(String modId)
+    {
+        for (net.fabricmc.loader.api.ModContainer container : net.fabricmc.loader.api.FabricLoader.getInstance().getAllMods())
+        {
+            if (container.getMetadata().getId().equals(modId))
+            {
+                return container.getMetadata().getVersion().getFriendlyString();
+            }
+        }
+
+        return "?";
+    }
+
+    public static void printDebug(String key, Object... args)
+    {
+        if (LitematicaMixinMod.PRINT_DEBUG.getBooleanValue())
+        {
+            logger.info(key, args);
+        }
     }
 }
