@@ -1,6 +1,7 @@
 # Litematica Printer
 
-## FORK FOR 1.20.2 - 1.20.4+ BUILDS ONLY. -- Sakura
+## FORK FOR BUILDING THE 1.20.2 - 1.20.6 / 1.21 BUILDS ONLY.  PLEASE SUPPORT THE OFFICIAL VERSION IF IT WORKS FOR YOU.
+-- Sakura
 
 ![GitHub issues](https://img.shields.io/github/issues-raw/aleksilassila/litematica-printer)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/aleksilassila/litematica-printer)
