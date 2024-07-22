@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -26,9 +26,9 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	//modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	include(modApi(fabricApi.module("fabric-api-base", project.fabric_api_version)))
-	include(modApi(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
-	include(modApi(fabricApi.module("fabric-networking-api-v1", project.fabric_api_version)))
+	//modImplementation "fabric-api-base:${project.fabric_api_version}"
+	//modImplementation "fabric-resource-loader-v0:${project.fabric_api_version}"
+	//modImplementation "fabric-networking-api-v1:${project.fabric_api_version}"
 
 	//modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version_out}:${project.malilib_version}"
 	//modImplementation "fi.dy.masa.litematica:litematica-fabric-${project.minecraft_version_out}:${project.litematica_version}"
