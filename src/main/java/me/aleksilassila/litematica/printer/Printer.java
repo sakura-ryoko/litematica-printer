@@ -3,6 +3,8 @@ package me.aleksilassila.litematica.printer;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.aleksilassila.litematica.printer.config.Configs;
+import me.aleksilassila.litematica.printer.config.Hotkeys;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +48,7 @@ public class Printer {
         if (worldSchematic == null)
             return false;
 
-        if (!LitematicaMixinMod.PRINT_MODE.getBooleanValue() && !LitematicaMixinMod.PRINT.getKeybind().isPressed())
+        if (!Configs.PRINT_MODE.getBooleanValue() && !Hotkeys.PRINT.getKeybind().isPressed())
             return false;
 
         PlayerAbilities abilities = player.getAbilities();
@@ -66,7 +68,7 @@ public class Printer {
 
             for (Guide guide : guides) {
                 // Add INTERACT_BLOCKS pull by DarkReaper231
-                if (guide.canExecute(player) && LitematicaMixinMod.INTERACT_BLOCKS.getBooleanValue()) {
+                if (guide.canExecute(player) && Configs.INTERACT_BLOCKS.getBooleanValue()) {
                     printDebug("Executing {} for {}", guide, state);
                     List<Action> actions = guide.execute(player);
                     actionHandler.addActions(actions.toArray(Action[]::new));
@@ -81,8 +83,8 @@ public class Printer {
     }
 
     private List<BlockPos> getReachablePositions() {
-        int maxReach = (int) Math.ceil(LitematicaMixinMod.PRINTING_RANGE.getDoubleValue());
-        double maxReachSquared = MathHelper.square(LitematicaMixinMod.PRINTING_RANGE.getDoubleValue());
+        int maxReach = (int) Math.ceil(Configs.PRINTING_RANGE.getDoubleValue());
+        double maxReachSquared = MathHelper.square(Configs.PRINTING_RANGE.getDoubleValue());
 
         ArrayList<BlockPos> positions = new ArrayList<>();
 
@@ -130,7 +132,7 @@ public class Printer {
 
     public static void printDebug(String key, Object... args)
     {
-        if (LitematicaMixinMod.PRINT_DEBUG.getBooleanValue())
+        if (Configs.PRINT_DEBUG.getBooleanValue())
         {
             logger.info(key, args);
         }

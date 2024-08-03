@@ -6,6 +6,7 @@ import java.util.Queue;
 
 import me.aleksilassila.litematica.printer.actions.Action;
 import me.aleksilassila.litematica.printer.actions.PrepareAction;
+import me.aleksilassila.litematica.printer.config.Configs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
@@ -24,7 +25,7 @@ public class ActionHandler {
     private int tick = 0;
 
     public void onGameTick() {
-        int tickRate = LitematicaMixinMod.PRINTING_INTERVAL.getIntegerValue();
+        int tickRate = Configs.PRINTING_INTERVAL.getIntegerValue();
 
         tick = tick % tickRate == tickRate - 1 ? 0 : tick + 1;
         if (tick % tickRate != 0) {

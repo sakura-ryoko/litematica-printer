@@ -1,10 +1,9 @@
 package me.aleksilassila.litematica.printer.guides.placement;
 
-import org.jetbrains.annotations.Nullable;
-
-import me.aleksilassila.litematica.printer.LitematicaMixinMod;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
+import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.SlabBlock;
@@ -51,7 +50,7 @@ public class GuesserGuide extends GeneralPlacementGuide {
     @Nullable
     @Override
     public PrinterPlacementContext getPlacementContext(ClientPlayerEntity player) {
-        if (contextCache != null && !LitematicaMixinMod.PRINT_DEBUG.getBooleanValue())
+        if (contextCache != null && !Configs.PRINT_DEBUG.getBooleanValue())
             return contextCache;
 
         ItemStack requiredItem = getRequiredItem(player).orElse(ItemStack.EMPTY);

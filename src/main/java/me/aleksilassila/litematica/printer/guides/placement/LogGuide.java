@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
-import me.aleksilassila.litematica.printer.LitematicaMixinMod;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
+import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.guides.interaction.LogStrippingGuide;
+import org.jetbrains.annotations.NotNull;
 import net.minecraft.block.Block;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -44,7 +42,7 @@ public class LogGuide extends GeneralPlacementGuide {
 
     @Override
     public boolean canExecute(ClientPlayerEntity player) {
-        if (!LitematicaMixinMod.STRIP_LOGS.getBooleanValue())
+        if (!Configs.STRIP_LOGS.getBooleanValue())
             return false;
 
         if (LogStrippingGuide.STRIPPED_BLOCKS.containsValue(targetState.getBlock())) {
