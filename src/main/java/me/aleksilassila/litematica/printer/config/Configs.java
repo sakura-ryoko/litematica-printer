@@ -2,6 +2,8 @@ package me.aleksilassila.litematica.printer.config;
 
 import java.util.List;
 import com.google.common.collect.ImmutableList;
+import me.aleksilassila.litematica.printer.PrinterReference;
+
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigDouble;
@@ -9,31 +11,17 @@ import fi.dy.masa.malilib.config.options.ConfigInteger;
 
 public class Configs
 {
+    private static final String GENERIC_KEY = PrinterReference.MOD_ID + ".config.generic";
+
     // Configs settings
-    public static final ConfigInteger PRINTING_INTERVAL = new ConfigInteger("printingInterval", 12, 1, 40,
-            "litematica-printer.config.generic.comment.printingInterval")
-            .translatedName("litematica-printer.config.generic.name.printingInterval");
-    public static final ConfigDouble PRINTING_RANGE = new ConfigDouble("printingRange", 5, 2.5, 5,
-            "litematica-printer.config.generic.comment.printingRange")
-            .translatedName("litematica-printer.config.generic.name.printingRange");
-    public static final ConfigBoolean PRINT_MODE = new ConfigBoolean("printingMode", false,
-            "litematica-printer.config.generic.comment.printingMode",
-            "litematica-printer.config.generic.prettyName.printingMode")
-            .translatedName("litematica-printer.config.generic.name.printingMode");
-    public static final ConfigBoolean PRINT_DEBUG = new ConfigBoolean("printingDebug", false,
-            "litematica-printer.config.generic.comment.printingDebug")
-            .translatedName("litematica-printer.config.generic.name.printingDebug");
-    public static final ConfigBoolean REPLACE_FLUIDS_SOURCE_BLOCKS = new ConfigBoolean("replaceFluidSourceBlocks",
-            true,
-            "litematica-printer.config.generic.comment.replaceFluidSourceBlocks")
-            .translatedName("litematica-printer.config.generic.name.replaceFluidSourceBlocks");
-    public static final ConfigBoolean STRIP_LOGS = new ConfigBoolean("stripLogs", true,
-            "litematica-printer.config.generic.comment.stripLogs")
-            .translatedName("litematica-printer.config.generic.name.stripLogs");
+    public static final ConfigInteger PRINTING_INTERVAL = new ConfigInteger("printingInterval", 12, 1, 40).apply(GENERIC_KEY);
+    public static final ConfigDouble PRINTING_RANGE = new ConfigDouble("printingRange", 5, 2.5, 5).apply(GENERIC_KEY);
+    public static final ConfigBoolean PRINT_MODE = new ConfigBoolean("printingMode", false).apply(GENERIC_KEY);
+    public static final ConfigBoolean PRINT_DEBUG = new ConfigBoolean("printingDebug", false).apply(GENERIC_KEY);
+    public static final ConfigBoolean REPLACE_FLUIDS_SOURCE_BLOCKS = new ConfigBoolean("replaceFluidSourceBlocks",true).apply(GENERIC_KEY);
+    public static final ConfigBoolean STRIP_LOGS = new ConfigBoolean("stripLogs", true).apply(GENERIC_KEY);
     // Add INTERACT_BLOCKS pull by DarkReaper231
-    public static final ConfigBoolean INTERACT_BLOCKS = new ConfigBoolean("interactBlocks", true,
-            "litematica-printer.config.generic.comment.interactBlocks")
-            .translatedName("litematica-printer.config.generic.name.interactBlocks");
+    public static final ConfigBoolean INTERACT_BLOCKS = new ConfigBoolean("interactBlocks", true).apply(GENERIC_KEY);
 
     public static ImmutableList<IConfigBase> getConfigList()
     {
