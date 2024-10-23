@@ -26,7 +26,7 @@
   "depends": {
     "malilib": ">=0.22.0-sakura.1",
     "litematica": ">=0.20.0-sakura.1",
-    "minecraft": "1.21.2", "1.21.3",
+    "minecraft": ">=1.21.2 <=1.21.3"
   },
   "custom": {
     "modmenu": {
