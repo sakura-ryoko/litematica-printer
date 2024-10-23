@@ -24,8 +24,8 @@
     "litematica-printer-impl.mixins.json"
   ],
   "depends": {
-    "malilib": ">=0.22.0-sakura.1",
-    "litematica": ">=0.20.0-sakura.1",
+    "malilib": ">=0.22.0-sakura.2",
+    "litematica": ">=0.20.0-sakura.2",
     "minecraft": ">=1.21.2 <=1.21.3"
   },
   "custom": {
