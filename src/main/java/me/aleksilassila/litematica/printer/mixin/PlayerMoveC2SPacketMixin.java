@@ -11,7 +11,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 @Mixin(PlayerMoveC2SPacket.class)
 public class PlayerMoveC2SPacketMixin {
-    @ModifyVariable(method = "<init>(DDDFFZZZ)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    @ModifyVariable(method = "<init>(DDDFFZZZZ)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private static float modifyLookYaw(float yaw) {
         Printer printer = LitematicaMixinMod.printer;
         if (printer == null)
@@ -25,7 +25,7 @@ public class PlayerMoveC2SPacketMixin {
             return yaw;
     }
 
-    @ModifyVariable(method = "<init>(DDDFFZZZ)V", at = @At("HEAD"), ordinal = 1, argsOnly = true)
+    @ModifyVariable(method = "<init>(DDDFFZZZZ)V", at = @At("HEAD"), ordinal = 1, argsOnly = true)
     private static float modifyLookPitch(float pitch) {
         Printer printer = LitematicaMixinMod.printer;
         if (printer == null)

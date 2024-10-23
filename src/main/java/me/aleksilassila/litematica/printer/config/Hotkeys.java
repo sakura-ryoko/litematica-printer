@@ -2,21 +2,18 @@ package me.aleksilassila.litematica.printer.config;
 
 import java.util.List;
 import com.google.common.collect.ImmutableList;
+import me.aleksilassila.litematica.printer.PrinterReference;
+
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 
 public class Hotkeys
 {
+    private static final String HOTKEY_KEY = PrinterReference.MOD_ID + ".config.hotkeys";
+
     // Hotkeys
-    public static final ConfigHotkey PRINT = new ConfigHotkey("print", "V", KeybindSettings.PRESS_ALLOWEXTRA_EMPTY,
-            "litematica-printer.config.hotkeys.comment.print",
-            "litematica-printer.config.hotkeys.prettyName.print")
-            .translatedName("litematica-printer.config.hotkeys.name.print");
-    public static final ConfigHotkey TOGGLE_PRINTING_MODE = new ConfigHotkey("togglePrintingMode", "CAPS_LOCK",
-            KeybindSettings.PRESS_ALLOWEXTRA_EMPTY,
-            "litematica-printer.config.hotkeys.comment.togglePrintingMode",
-            "litematica-printer.config.hotkeys.prettyName.togglePrintingMode")
-            .translatedName("litematica-printer.config.hotkeys.name.togglePrintingMode");
+    public static final ConfigHotkey PRINT                = new ConfigHotkey("print", "V", KeybindSettings.PRESS_ALLOWEXTRA_EMPTY).apply(HOTKEY_KEY);
+    public static final ConfigHotkey TOGGLE_PRINTING_MODE = new ConfigHotkey("togglePrintingMode", "CAPS_LOCK", KeybindSettings.PRESS_ALLOWEXTRA_EMPTY).apply(HOTKEY_KEY);
 
     public static List<ConfigHotkey> getHotkeyList()
     {
