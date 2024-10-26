@@ -9,19 +9,22 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
 
-public class PrinterPlacementContext extends ItemPlacementContext {
+public class PrinterPlacementContext extends ItemPlacementContext
+{
     public final @Nullable Direction lookDirection;
     public final boolean shouldSneak;
     public final BlockHitResult hitResult;
     public final int requiredItemSlot;
 
     public PrinterPlacementContext(PlayerEntity player, BlockHitResult hitResult, ItemStack requiredItem,
-            int requiredItemSlot) {
+                                   int requiredItemSlot)
+    {
         this(player, hitResult, requiredItem, requiredItemSlot, null, false);
     }
 
     public PrinterPlacementContext(PlayerEntity player, BlockHitResult hitResult, ItemStack requiredItem,
-            int requiredItemSlot, @Nullable Direction lookDirection, boolean requiresSneaking) {
+                                   int requiredItemSlot, @Nullable Direction lookDirection, boolean requiresSneaking)
+    {
         super(player, Hand.MAIN_HAND, requiredItem, hitResult);
 
         this.lookDirection = lookDirection;
@@ -31,27 +34,35 @@ public class PrinterPlacementContext extends ItemPlacementContext {
     }
 
     @Override
-    public Direction getPlayerLookDirection() {
+    public Direction getPlayerLookDirection()
+    {
         return lookDirection == null ? super.getPlayerLookDirection() : lookDirection;
     }
 
     @Override
-    public Direction getVerticalPlayerLookDirection() {
+    public Direction getVerticalPlayerLookDirection()
+    {
         if (lookDirection != null && lookDirection.getOpposite() == super.getVerticalPlayerLookDirection())
+        {
             return lookDirection;
+        }
         return super.getVerticalPlayerLookDirection();
     }
 
     @Override
-    public Direction getHorizontalPlayerFacing() {
+    public Direction getHorizontalPlayerFacing()
+    {
         if (lookDirection == null || !lookDirection.getAxis().isHorizontal())
+        {
             return super.getHorizontalPlayerFacing();
+        }
 
         return lookDirection;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "PrinterPlacementContext{" +
                 "lookDirection=" + lookDirection +
                 ", requiresSneaking=" + shouldSneak +
