@@ -1,14 +1,15 @@
 package me.aleksilassila.litematica.printer.guides.placement;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SlabGuide extends GeneralPlacementGuide {
     public SlabGuide(SchematicBlockState state) {
@@ -29,8 +30,7 @@ public class SlabGuide extends GeneralPlacementGuide {
         };
 
         for (Direction direction : directionsToCheck) {
-            SlabType neighborSlabType = getProperty(state.offset(direction).currentState, SlabBlock.TYPE)
-                    .orElse(SlabType.DOUBLE);
+            SlabType neighborSlabType = getProperty(state.offset(direction).currentState, SlabBlock.TYPE).orElse(SlabType.DOUBLE);
 
             if (neighborSlabType == SlabType.DOUBLE || neighborSlabType == targetSlabType) {
                 resultList.add(direction);
