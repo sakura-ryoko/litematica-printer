@@ -11,7 +11,7 @@ import fi.dy.masa.malilib.config.options.ConfigInteger;
 
 public class Configs
 {
-    private static final String GENERIC_KEY = PrinterReference.MOD_ID + ".config.generic";
+    private static final String GENERIC_KEY = PrinterReference.MOD_KEY + ".config.generic";
 
     // Configs settings
     public static final ConfigInteger PRINTING_INTERVAL             = new ConfigInteger("printingInterval", 12, 1, 40).apply(GENERIC_KEY);

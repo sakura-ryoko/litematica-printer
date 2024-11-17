@@ -9,7 +9,7 @@ import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 
 public class Hotkeys
 {
-    private static final String HOTKEY_KEY = PrinterReference.MOD_ID + ".config.hotkeys";
+    private static final String HOTKEY_KEY = PrinterReference.MOD_KEY + ".config.hotkeys";
 
     // Hotkeys
     public static final ConfigHotkey PRINT                = new ConfigHotkey("print",              "V", KeybindSettings.PRESS_ALLOWEXTRA_EMPTY).apply(HOTKEY_KEY);
