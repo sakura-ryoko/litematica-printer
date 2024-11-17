@@ -19,9 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
-
 import fi.dy.masa.litematica.data.DataManager;
 import fi.dy.masa.litematica.util.RayTraceUtils;
 import fi.dy.masa.litematica.world.SchematicWorldHandler;
@@ -38,7 +35,6 @@ public class Printer
     public Printer(@NotNull MinecraftClient client, @NotNull ClientPlayerEntity player)
     {
         this.player = player;
-
         this.actionHandler = new ActionHandler(client, player);
     }
 
@@ -132,31 +128,18 @@ public class Printer
         }
 
         return positions.stream()
-                .filter(p ->
-                        {
-                            Vec3d vec = Vec3d.ofCenter(p);
-                            return this.player.getPos().squaredDistanceTo(vec) > 1
-                                    && this.player.getEyePos().squaredDistanceTo(vec) > 1;
-                        })
-                .sorted((a, b) ->
-                        {
-                            double aDistance = this.player.getPos().squaredDistanceTo(Vec3d.ofCenter(a));
-                            double bDistance = this.player.getPos().squaredDistanceTo(Vec3d.ofCenter(b));
-                            return Double.compare(aDistance, bDistance);
-                        }).toList();
-    }
-
-    public static String getModVersionString(String modId)
-    {
-        for (ModContainer container : FabricLoader.getInstance().getAllMods())
-        {
-            if (container.getMetadata().getId().equals(modId))
-            {
-                return container.getMetadata().getVersion().getFriendlyString();
-            }
-        }
-
-        return "?";
+                        .filter(p ->
+                                {
+                                    Vec3d vec = Vec3d.ofCenter(p);
+                                    return this.player.getPos().squaredDistanceTo(vec) > 1
+                                            && this.player.getEyePos().squaredDistanceTo(vec) > 1;
+                                })
+                        .sorted((a, b) ->
+                                {
+                                    double aDistance = this.player.getPos().squaredDistanceTo(Vec3d.ofCenter(a));
+                                    double bDistance = this.player.getPos().squaredDistanceTo(Vec3d.ofCenter(b));
+                                    return Double.compare(aDistance, bDistance);
+                                }).toList();
     }
 
     public static void printDebug(String key, Object... args)

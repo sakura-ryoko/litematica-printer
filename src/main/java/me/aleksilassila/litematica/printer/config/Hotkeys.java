@@ -12,7 +12,7 @@ public class Hotkeys
     private static final String HOTKEY_KEY = PrinterReference.MOD_ID + ".config.hotkeys";
 
     // Hotkeys
-    public static final ConfigHotkey PRINT                = new ConfigHotkey("print", "V", KeybindSettings.PRESS_ALLOWEXTRA_EMPTY).apply(HOTKEY_KEY);
+    public static final ConfigHotkey PRINT                = new ConfigHotkey("print",              "V", KeybindSettings.PRESS_ALLOWEXTRA_EMPTY).apply(HOTKEY_KEY);
     public static final ConfigHotkey TOGGLE_PRINTING_MODE = new ConfigHotkey("togglePrintingMode", "CAPS_LOCK", KeybindSettings.PRESS_ALLOWEXTRA_EMPTY).apply(HOTKEY_KEY);
 
     public static List<ConfigHotkey> getHotkeyList()

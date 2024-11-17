@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "litematica-printer",
+  "id": "litematica_printer",
   "version": "${version}",
   "name": "Litematica Printer",
   "description": "A fork of Litematica that adds the missing printer functionality",
@@ -21,12 +21,15 @@
   },
   "mixins": [
     "litematica-printer.mixins.json",
-    "litematica-printer-impl.mixins.json"
+    "litematica-printer-implementation.mixins.json"
   ],
   "depends": {
-    "malilib": ">=0.22.0-sakura.2",
-    "litematica": ">=0.20.0-sakura.2",
-    "minecraft": ">=1.21.2 <=1.21.3"
+    "fabricloader": ">=0.16.7",
+    "fabric": "*",
+    "java": ">=21",
+    "minecraft": ">=1.21.2 <=1.21.3",
+    "malilib": ">=0.22.0-sakura.7",
+    "litematica": ">=0.20.0-sakura.3"
   },
   "custom": {
     "modmenu": {

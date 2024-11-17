@@ -1,11 +1,9 @@
 package me.aleksilassila.litematica.printer;
 
-import me.aleksilassila.litematica.printer.config.Configs;
-import me.aleksilassila.litematica.printer.config.Hotkeys;
+import me.aleksilassila.litematica.printer.event.KeyCallbacks;
 
+import net.minecraft.client.MinecraftClient;
 import net.fabricmc.api.ModInitializer;
-
-import fi.dy.masa.malilib.hotkeys.KeyCallbackToggleBooleanConfigWithMessage;
 
 public class LitematicaMixinMod implements ModInitializer
 {
@@ -14,7 +12,7 @@ public class LitematicaMixinMod implements ModInitializer
     @Override
     public void onInitialize()
     {
-        Hotkeys.TOGGLE_PRINTING_MODE.getKeybind().setCallback(new KeyCallbackToggleBooleanConfigWithMessage(Configs.PRINT_MODE));
+        KeyCallbacks.init(MinecraftClient.getInstance());
         Printer.logger.info("{} initialized.", PrinterReference.MOD_STRING);
     }
 }
