@@ -17,7 +17,6 @@ public class SlabGuide extends GeneralPlacementGuide {
 
     @Override
     protected List<Direction> getPossibleSides() {
-        // Pull From bruned12
         List<Direction> resultList = new ArrayList<>();
         SlabType targetSlabType = getProperty(state.targetState, SlabBlock.TYPE).orElse(SlabType.DOUBLE);
 
@@ -40,8 +39,7 @@ public class SlabGuide extends GeneralPlacementGuide {
 
         if (targetSlabType == SlabType.TOP || targetSlabType == SlabType.BOTTOM) {
             Direction verticalDirection = targetSlabType == SlabType.TOP ? Direction.UP : Direction.DOWN;
-            SlabType neighborSlabType = getProperty(state.offset(verticalDirection).currentState, SlabBlock.TYPE)
-                    .orElse(SlabType.DOUBLE);
+            SlabType neighborSlabType = getProperty(state.offset(verticalDirection).currentState, SlabBlock.TYPE).orElse(SlabType.DOUBLE);
 
             if (neighborSlabType == SlabType.DOUBLE || neighborSlabType != targetSlabType) {
                 resultList.add(verticalDirection);

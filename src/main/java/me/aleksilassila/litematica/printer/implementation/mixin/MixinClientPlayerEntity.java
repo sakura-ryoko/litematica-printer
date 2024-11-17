@@ -4,6 +4,7 @@ import java.util.Optional;
 import me.aleksilassila.litematica.printer.LitematicaMixinMod;
 import me.aleksilassila.litematica.printer.Printer;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
+import me.aleksilassila.litematica.printer.UpdateChecker;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.entity.BlockEntity;
@@ -14,6 +15,7 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.packet.c2s.play.UpdateSignC2SPacket;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,7 +47,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         if (!didCheckForUpdates)
         {
             didCheckForUpdates = true;
-            //checkForUpdates();
+            checkForUpdates();
         }
 
         if (LitematicaMixinMod.printer == null || LitematicaMixinMod.printer.player != clientPlayer)
@@ -69,20 +71,16 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     @Unique
     public void checkForUpdates()
     {
-        /*
-         * DISABLED!
-         *
-         * new Thread(() -> {
-         * String version = UpdateChecker.version;
-         * String newVersion = UpdateChecker.getPrinterVersion();
-         *
-         * if (!version.equals(newVersion)) {
-         * client.inGameHud.getChatHud().addMessage(Text.literal(
-         * "New version of Litematica Printer available in https://github.com/aleksilassila/litematica-printer/releases"
-         * ));
-         * }
-         * }).start();
-         */
+        new Thread(() -> {
+            String version = UpdateChecker.version;
+            String newVersion = UpdateChecker.getPrinterVersion();
+
+            Printer.printDebug("Current version: [{}], detected version [{}]", version, newVersion);
+
+            if (!version.equals(newVersion)) {
+                client.inGameHud.getChatHud().addMessage(Text.literal("New version of Litematica Printer available in https://github.com/aleksilassila/litematica-printer/releases"));
+            }
+        }).start();
     }
 
     @Inject(method = "openEditSignScreen", at = @At("HEAD"), cancellable = true)
@@ -91,11 +89,11 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         getTargetSignEntity(sign).ifPresent(signBlockEntity ->
         {
             UpdateSignC2SPacket packet = new UpdateSignC2SPacket(sign.getPos(),
-                                         front,
-                                         signBlockEntity.getText(front).getMessage(0, false).getString(),
-                                         signBlockEntity.getText(front).getMessage(1, false).getString(),
-                                         signBlockEntity.getText(front).getMessage(2, false).getString(),
-                                         signBlockEntity.getText(front).getMessage(3, false).getString());
+                     front,
+                     signBlockEntity.getText(front).getMessage(0, false).getString(),
+                     signBlockEntity.getText(front).getMessage(1, false).getString(),
+                     signBlockEntity.getText(front).getMessage(2, false).getString(),
+                     signBlockEntity.getText(front).getMessage(3, false).getString());
             this.networkHandler.sendPacket(packet);
             ci.cancel();
         });

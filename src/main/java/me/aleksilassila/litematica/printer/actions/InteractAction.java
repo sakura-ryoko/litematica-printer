@@ -23,7 +23,6 @@ abstract public class InteractAction extends Action
     public void send(MinecraftClient client, ClientPlayerEntity player)
     {
         interact(client, player, Hand.MAIN_HAND, context.hitResult);
-
         Printer.printDebug("InteractAction.send: Blockpos: {} Side: {} HitPos: {}", context.getBlockPos(), context.getSide(), context.getHitPos());
     }
 

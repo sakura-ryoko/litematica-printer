@@ -75,8 +75,7 @@ public class ChestGuide extends GeneralPlacementGuide {
         Direction neighborFacing = getProperty(neighbor, ChestBlock.FACING).orElse(null);
         Direction facing = getProperty(state.targetState, ChestBlock.FACING).orElse(null);
 
-        if (neighborType == null || neighborFacing == null || facing == null)
-            return false;
+        if (neighborType == null || neighborFacing == null || facing == null) return false;
 
         if (facing.getAxis() == neighborDirection.getAxis() || neighborDirection.getAxis() == Direction.Axis.Y)
             return false;
@@ -88,11 +87,9 @@ public class ChestGuide extends GeneralPlacementGuide {
     private boolean wantsToConnectToSide(SchematicBlockState state, Direction direction) {
         ChestType type = getProperty(state.targetState, ChestBlock.CHEST_TYPE).orElse(null);
         Direction facing = getProperty(state.targetState, ChestBlock.FACING).orElse(null);
-        if (type == null || facing == null || type == ChestType.SINGLE)
-            return false;
+        if (type == null || facing == null || type == ChestType.SINGLE) return false;
 
-        Direction neighborDirection = type == ChestType.LEFT ? facing.rotateYClockwise()
-                : facing.rotateYCounterclockwise();
+        Direction neighborDirection = type == ChestType.LEFT ? facing.rotateYClockwise() : facing.rotateYCounterclockwise();
 
         return direction == neighborDirection;
     }

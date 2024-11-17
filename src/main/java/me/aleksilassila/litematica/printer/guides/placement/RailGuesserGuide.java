@@ -73,6 +73,21 @@ public class RailGuesserGuide extends GuesserGuide {
         return new HashSet<>(allowedConnections).containsAll(possibleConnections);
     }
 
+//    private boolean wouldBlockAnotherConnection() {
+//        List<Direction> possibleConnections = new ArrayList<>();
+//
+//        for (Direction d : Direction.values()) {
+//            if (d.getAxis().isVertical()) continue;
+//            SchematicBlockState neighbor = state.offset(d);
+//
+//            if (couldConnectWrongly(neighbor)) {
+//                possibleConnections.add(d);
+//            }
+//        }
+//
+//        return possibleConnections.size() > 1;
+//    }
+
      private boolean hasFreeConnections(SchematicBlockState state) {
         List<Direction> possibleConnections = getRailDirections(state);
         if (possibleConnections.isEmpty())
@@ -80,6 +95,7 @@ public class RailGuesserGuide extends GuesserGuide {
 
         for (Direction d : possibleConnections) {
             SchematicBlockState neighbor = state.offset(d);
+            // FIXME -->  when will this ever not be equal? <.<
             if (neighbor.currentState.getBlock() != neighbor.currentState.getBlock()) {
                 return false;
             }
