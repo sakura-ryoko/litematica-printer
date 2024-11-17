@@ -1,15 +1,12 @@
 # Litematica Printer
 
-## FORK FOR BUILDING THE 1.20.2 - 1.20.6 / 1.21 BUILDS ONLY.  PLEASE SUPPORT THE OFFICIAL VERSION IF IT WORKS FOR YOU. -- Sakura
-## WORKING TOWARDS RECONCILIATION --> 3.2.1
-
 ![GitHub issues](https://img.shields.io/github/issues-raw/aleksilassila/litematica-printer)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/aleksilassila/litematica-printer)
 ![GitHub all releases](https://img.shields.io/github/downloads/aleksilassila/litematica-printer/total)
 ![GitHub Repo stars](https://img.shields.io/github/stars/aleksilassila/litematica-printer)
 
-This extension adds printing functionality for [Litematica fabric](https://github.com/maruohon/litematica).
-Printer allows players to build big structures more quickly by automatically placing the correct blocks around you.
+This extension adds printing functionality for [Litematica fabric](https://github.com/maruohon/litematica). Printer
+allows players to build big structures more quickly by automatically placing the correct blocks around you.
 
 ![Demo](printer_demo.gif)
 
@@ -17,7 +14,7 @@ Printer allows players to build big structures more quickly by automatically pla
 
 1. Download and install [Fabric](https://fabricmc.net/use/installer/) if you haven't already.
 2. Download the latest Litematica Printer release for your Minecraft version from the
-   [releases page](https://github.com/aleksilassila/litematica-printing/releases/latest) (The files can be found under
+   [releases page](https://github.com/aleksilassila/litematica-printer/releases) (The files can be found under
    "assets").
 3. Download [Litematica + MaLiLib](https://www.curseforge.com/minecraft/mc-mods/litematica)
    and [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api/) (≠ Fabric).
@@ -58,7 +55,8 @@ Currently, the following features are still broken or missing:
 
 - Placing liquids (printing **in** liquids works though)
 - Printing without support directly in air (printInAir)
-- Current algorithm for placing rails isn't perfect, sometimes it can't place all the rails (to avoid placing anything incorrectly).
+- Current algorithm for placing rails isn't perfect,
+  sometimes it can't place all the rails (to avoid placing anything incorrectly).
 - Legit mode? (for anticheats)
 
 Also, I have decided that features that fix existing builds,
@@ -86,3 +84,12 @@ so that it would be much easier to work with.
 Also, if you know a better way to develop for multiple
 Minecraft versions that doesn't involve multiple git branches or hacky gradle scripts
 (perhaps a way to share common code between the implementations?), please let me know.
+
+Useful gradle tasks:
+
+- `[v1_19/v1_18/v1_17]:syncImplementations`
+    - Copy over common code to other implementations
+- `buildAll`
+    - Build all implementations and copy their jars to `build/` directory for easy distribution.
+- `[v1_19/v1_18/v1_17]:runClient`
+    - Start the target Minecraft version
