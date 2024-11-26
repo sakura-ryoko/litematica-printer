@@ -1,5 +1,6 @@
 package me.aleksilassila.litematica.printer.guides.placement;
 
+import me.aleksilassila.litematica.printer.Printer;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import me.aleksilassila.litematica.printer.actions.Action;
 import me.aleksilassila.litematica.printer.actions.PrepareAction;
@@ -8,6 +9,7 @@ import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.guides.Guide;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
 import me.aleksilassila.litematica.printer.implementation.actions.InteractActionImpl;
+
 import net.minecraft.block.*;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -26,6 +28,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import fi.dy.masa.litematica.util.ItemUtils;
+
 /**
  * Guide that clicks its neighbors to create a placement in target position.
  */
@@ -35,7 +39,8 @@ abstract public class PlacementGuide extends Guide {
     }
 
     protected ItemStack getBlockItem(BlockState state) {
-        return state.getBlock().getPickStack(this.state.world, this.state.blockPos, state);
+        // Let's use the Litematica Pick Block Cache for this.
+        return ItemUtils.getItemForBlock(this.state.world, this.state.blockPos, state, true);
     }
 
     protected Optional<Block> getRequiredItemAsBlock(ClientPlayerEntity player) {
@@ -55,6 +60,7 @@ abstract public class PlacementGuide extends Guide {
 
     @Override
     protected @Nonnull List<ItemStack> getRequiredItems() {
+        Printer.printDebug("PlacementGuide#getRequiredItems() - target state [{}]", state.targetState.toString());
         return Collections.singletonList(getBlockItem(state.targetState));
     }
 

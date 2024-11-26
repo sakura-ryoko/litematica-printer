@@ -51,7 +51,7 @@ public class SlabGuide extends GeneralPlacementGuide {
     @Override
     protected Vec3d getHitModifier(Direction validSide) {
         Direction requiredHalf = getRequiredHalf(state);
-        if (validSide.getHorizontal() != -1) {
+        if (validSide.getHorizontalQuarterTurns() != -1) {
             return new Vec3d(0, requiredHalf.getOffsetY() * 0.25, 0);
         } else {
             return new Vec3d(0, 0, 0);

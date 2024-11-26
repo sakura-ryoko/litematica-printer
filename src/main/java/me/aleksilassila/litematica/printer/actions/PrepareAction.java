@@ -1,5 +1,6 @@
 package me.aleksilassila.litematica.printer.actions;
 
+import me.aleksilassila.litematica.printer.Printer;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -10,6 +11,8 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.PlayerInput;
 import net.minecraft.util.math.Direction;
+
+import fi.dy.masa.litematica.util.InventoryUtils;
 
 public class PrepareAction extends Action {
     public final PrinterPlacementContext context;
@@ -23,7 +26,7 @@ public class PrepareAction extends Action {
         Direction lookDirection = context.lookDirection;
 
         if (lookDirection != null && lookDirection.getAxis().isHorizontal()) {
-            this.yaw = lookDirection.asRotation();
+            this.yaw = lookDirection.getPositiveHorizontalDegrees();
         } else {
             this.modifyYaw = false;
         }
@@ -51,19 +54,21 @@ public class PrepareAction extends Action {
         ItemStack itemStack = context.getStack();
         int slot = context.requiredItemSlot;
 
-        if (itemStack != null && client.interactionManager != null) {
+        if (itemStack != null && !itemStack.isEmpty() && client.interactionManager != null) {
+            Printer.printDebug("PrepareAction#send(): slot [{}] // itemStack [{}]", slot, itemStack.toString());
+            // This thing is straight from MinecraftClient#doItemPick()
             PlayerInventory inventory = player.getInventory();
 
-            // This thing is straight from MinecraftClient#doItemPick()
             if (player.getAbilities().creativeMode) {
-                inventory.addPickBlock(itemStack);
-                client.interactionManager.clickCreativeStack(player.getStackInHand(Hand.MAIN_HAND),
-                        36 + inventory.selectedSlot);
+                this.addPickBlock(inventory, itemStack);
+                client.interactionManager.clickCreativeStack(player.getStackInHand(Hand.MAIN_HAND), 36 + inventory.selectedSlot);
             } else if (slot != -1) {
                 if (PlayerInventory.isValidHotbarIndex(slot)) {
                     inventory.selectedSlot = slot;
                 } else {
-                    client.interactionManager.pickFromInventory(slot);
+                    // TODO --> test this (pickFromInventory has been REMOVED)
+                    //client.interactionManager.pickFromInventory(slot);
+                    InventoryUtils.setPickedItemToHand(slot, itemStack, client);
                 }
             }
         }
@@ -84,6 +89,29 @@ public class PrepareAction extends Action {
         } else {
             player.input.playerInput = new PlayerInput(player.input.playerInput.forward(), player.input.playerInput.backward(), player.input.playerInput.left(), player.input.playerInput.right(), player.input.playerInput.jump(), false, player.input.playerInput.sprint());
             player.networkHandler.sendPacket(new ClientCommandC2SPacket(player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
+        }
+    }
+
+    private void addPickBlock(PlayerInventory inv, ItemStack stack) {
+        int slot = inv.getSlotWithStack(stack);
+
+        if (slot >= 0 && slot <= 9) {
+            inv.selectedSlot = slot;
+        } else {
+            if (slot == -1) {
+                inv.selectedSlot = inv.getSwappableHotbarSlot();
+
+                if (!inv.main.get(inv.selectedSlot).isEmpty()) {
+                    int empty = inv.getEmptySlot();
+
+                    if (empty != -1) {
+                        inv.main.set(empty, inv.main.get(inv.selectedSlot));
+                    }
+                }
+                inv.main.set(inv.selectedSlot, stack);
+            } else {
+                inv.swapSlotWithHotbar(slot);
+            }
         }
     }
 
