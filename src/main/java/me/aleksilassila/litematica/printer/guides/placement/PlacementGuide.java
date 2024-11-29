@@ -124,6 +124,8 @@ abstract public class PlacementGuide extends Guide {
 
         return false;
     }
+
+    @SuppressWarnings("deprecation")
     private boolean canPlaceInWater(BlockState blockState) {
         Block block = blockState.getBlock();
         if (block instanceof FluidFillable) {
