@@ -27,9 +27,9 @@
     "fabricloader": ">=0.16.9",
     "fabric": "*",
     "java": ">=21",
-    "minecraft": "1.21.4-rc.3",
-    "malilib": ">=0.22.59-rc3",
-    "litematica": ">=0.20.59-rc3"
+    "minecraft": "1.21.4",
+    "malilib": ">=0.23.0-sakura.1",
+    "litematica": ">=0.21.0-sakura.1"
   },
   "custom": {
     "modmenu": {
