@@ -28,8 +28,8 @@
     "fabric": "*",
     "java": ">=21",
     "minecraft": "1.21.4",
-    "malilib": ">=0.23.0-sakura.1",
-    "litematica": ">=0.21.0-sakura.1"
+    "malilib": ">=0.23.0-sakura.4",
+    "litematica": ">=0.21.0-sakura.8"
   },
   "custom": {
     "modmenu": {
