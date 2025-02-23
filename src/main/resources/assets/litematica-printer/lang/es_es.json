@@ -2,7 +2,7 @@
     "litematica-printer.config.generic.name.printingInterval": "Intervalo de impresión",
     "litematica-printer.config.generic.name.printingRange": "Rango de impresión",
     "litematica-printer.config.generic.name.printingMode": "Modo de impresión",
-    "litematica-printer.config.generic.name.printingDebug": "Depuración Impresión ",
+    "litematica-printer.config.generic.name.printingDebug": "Depuración Impresión",
     "litematica-printer.config.generic.name.replaceFluidSourceBlocks": "Reemplazar los bloques de fuente de fluido",
     "litematica-printer.config.generic.name.stripLogs": "Registros de corteza",
     "litematica-printer.config.generic.name.interactBlocks": "Bloques de interacción",
