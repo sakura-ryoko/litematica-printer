@@ -1,0 +1,36 @@
+{
+    "litematica-printer.config.generic.name.printingInterval": "printingInterval",
+    "litematica-printer.config.generic.name.printingRange": "printingRange",
+    "litematica-printer.config.generic.name.printingMode": "printingMode",
+    "litematica-printer.config.generic.name.printingDebug": "printingDebug",
+    "litematica-printer.config.generic.name.replaceFluidSourceBlocks": "replaceFluidSourceBlocks",
+    "litematica-printer.config.generic.name.stripLogs": "stripLogs",
+    "litematica-printer.config.generic.name.interactBlocks": "interactBlocks",
+
+    "litematica-printer.config.generic.prettyName.printingInterval": "Інтервал друку",
+    "litematica-printer.config.generic.prettyName.printingRange": "Діапазон друку",
+    "litematica-printer.config.generic.prettyName.printingMode": "Режим друку",
+    "litematica-printer.config.generic.prettyName.printingDebug": "Налагодження друку",
+    "litematica-printer.config.generic.prettyName.replaceFluidSourceBlocks": "Замінити блоки джерела рідини",
+    "litematica-printer.config.generic.prettyName.stripLogs": "Обтесані колоди",
+    "litematica-printer.config.generic.prettyName.interactBlocks": "Взаємодія з блоками",
+
+    "litematica-printer.config.generic.comment.printingInterval": "Інтервал друку. Менші значення означають більшу швидкість друку.\nЯкщо друк створює «блоки-привиди» або блоки спрямовані неправильно, збільште це значення.",
+    "litematica-printer.config.generic.comment.printingRange": "Діапазон місць блоку друку\nДля серверів рекомендовано нижчі значення.",
+    "litematica-printer.config.generic.comment.printingMode": "Автоматична збірка/друк завантаженого вибору.\nЗверніть увагу, що деякі сервери та плаґіни для захисту від читів не дозволяють друкувати.",
+    "litematica-printer.config.generic.comment.printingDebug": "Вмикає журнал налагодження для друку.",
+    "litematica-printer.config.generic.comment.replaceFluidSourceBlocks": "Чи потрібно замінити друком блоки джерела рідини.",
+    "litematica-printer.config.generic.comment.stripLogs": "Чи повинен друк використовувати звичайні журнали, якщо\nвидалені версії недоступні, а потім знімати їх сокирою.",
+    "litematica-printer.config.generic.comment.interactBlocks": "Чи повинен друк установлювати стан блоку.",
+
+    "litematica-printer.config.hotkeys.name.print": "print",
+    "litematica-printer.config.hotkeys.name.togglePrintingMode": "togglePrintingMode",
+
+    "litematica-printer.config.hotkeys.prettyName.print": "Друкувати",
+    "litematica-printer.config.hotkeys.prettyName.togglePrintingMode": "Перемикач режиму друку",
+
+    "litematica-printer.config.hotkeys.comment.print": "Друкує під час натискання.",
+    "litematica-printer.config.hotkeys.comment.togglePrintingMode": "Дозволяє швидко вмикати/вимикати режим друку.",
+
+    "modmenu.descriptionTranslation.litematica_printer": "Форк Litematica, який додає відсутню функцію друку"
+}
