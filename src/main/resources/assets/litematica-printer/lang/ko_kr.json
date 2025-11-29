@@ -1,5 +1,6 @@
 {
     "litematica-printer.config.generic.comment.interactBlocks": "프린터가 블록 상태를 설정해야 하는지 여부입니다.",
+    "litematica-printer.config.generic.comment.printInAir": "하부에 지지 블록 없이 공중에 블록을 설치할 수 있습니다.",
     "litematica-printer.config.generic.comment.printingDebug": "프린팅을 위한 디버그 로그 기록을 활성화합니다.",
     "litematica-printer.config.generic.comment.printingInterval": "프린트 간격입니다. 값이 낮을수록 프린트 속도가 빨라집니다.\n만약 프린트 중에 \"고스트 블록\"이 생기거나 블록의 방향이 잘못 설치된다면 값을 증가시키세요.",
     "litematica-printer.config.generic.comment.printingMode": "불러온 선택을 자동 건축 / 프린트 합니다.\n일부 서버와 안티치트 플러그인은 프린트를 금지할 수 있다는 것에 주의하세요.",
@@ -13,6 +14,7 @@
     "litematica-printer.config.generic.name.printingRange": "프린트 범위",
     "litematica-printer.config.generic.name.replaceFluidSourceBlocks": "유체 원천 블록 교체",
     "litematica-printer.config.generic.name.stripLogs": "원목 벗기기",
+    "litematica-printer.config.generic.name.printInAir": "공중에 프린트",
     "litematica-printer.config.generic.prettyName.interactBlocks": "블록 상호 작용",
     "litematica-printer.config.generic.prettyName.printingDebug": "프린트 디버그",
     "litematica-printer.config.generic.prettyName.printingInterval": "프린트 간격",
@@ -20,6 +22,7 @@
     "litematica-printer.config.generic.prettyName.printingRange": "프린트 범위",
     "litematica-printer.config.generic.prettyName.replaceFluidSourceBlocks": "유체 원천 블록 교체",
     "litematica-printer.config.generic.prettyName.stripLogs": "원목 벗기기",
+    "litematica-printer.config.generic.prettyName.printInAir": "공중에 프린트",
     "litematica-printer.config.hotkeys.comment.print": "이 키를 누르고 있는 동안 프린트가 진행됩니다.",
     "litematica-printer.config.hotkeys.comment.togglePrintingMode": "프린트 모드를 빠르게 켜고 끌 수 있습니다.",
     "litematica-printer.config.hotkeys.name.print": "프린트",
