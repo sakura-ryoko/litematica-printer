@@ -2,6 +2,7 @@ package me.aleksilassila.litematica.printer.guides.placement;
 
 import me.aleksilassila.litematica.printer.Printer;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
+import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
@@ -47,7 +48,7 @@ public class GeneralPlacementGuide extends PlacementGuide {
     }
 
     private Optional<Direction> getValidSide(SchematicBlockState state) {
-        boolean printInAir = false; // LitematicaMixinMod.PRINT_IN_AIR.getBooleanValue();
+        boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
 
         List<Direction> sides = getPossibleSides();
 
@@ -55,22 +56,23 @@ public class GeneralPlacementGuide extends PlacementGuide {
             return Optional.empty();
         }
 
+        if (printInAir && !getRequiresSupport()) {
+            // When printInAir is enabled, we can place directly without support
+            return Optional.of(Direction.UP); // Use any direction as we'll target the position directly
+        }
+
         List<Direction> validSides = new ArrayList<>();
         for (Direction side : sides) {
-            if (printInAir && !getRequiresSupport()) {
-                return Optional.of(side);
-            } else {
-                SchematicBlockState neighborState = state.offset(side);
+            SchematicBlockState neighborState = state.offset(side);
 
-                if (getProperty(neighborState.currentState, SlabBlock.TYPE).orElse(null) == SlabType.DOUBLE) {
-                    validSides.add(side);
-                    continue;
-                }
-
-                if (canBeClicked(neighborState.world, neighborState.blockPos) && // Handle unclickable grass for example
-                        !neighborState.currentState.isReplaceable())
-                    validSides.add(side);
+            if (getProperty(neighborState.currentState, SlabBlock.TYPE).orElse(null) == SlabType.DOUBLE) {
+                validSides.add(side);
+                continue;
             }
+
+            if (canBeClicked(neighborState.world, neighborState.blockPos) && // Handle unclickable grass for example
+                    !neighborState.currentState.isReplaceable())
+                validSides.add(side);
         }
 
         for (Direction validSide : validSides) {
@@ -93,6 +95,13 @@ public class GeneralPlacementGuide extends PlacementGuide {
     }
 
     private Optional<Vec3d> getHitVector(SchematicBlockState state) {
+        boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
+
+        if (printInAir && !getRequiresSupport()) {
+            // For air placement, target the center of the target block position
+            return Optional.of(Vec3d.ofCenter(state.blockPos));
+        }
+
         return getValidSide(state).map(side -> Vec3d.ofCenter(state.blockPos)
                 .add(Vec3d.of(side.getVector()).multiply(0.5))
                 .add(getHitModifier(side)));
@@ -112,8 +121,17 @@ public class GeneralPlacementGuide extends PlacementGuide {
             Optional<Direction> lookDirection = getLookDirection();
             boolean requiresShift = getUseShift(state);
 
-            BlockHitResult blockHitResult = new BlockHitResult(hitVec.get(), validSide.get().getOpposite(),
-                    state.blockPos.offset(validSide.get()), false);
+            boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
+            BlockHitResult blockHitResult;
+
+            if (printInAir && !getRequiresSupport()) {
+                // For air placement, target the block position directly with a reasonable side
+                // Using UP direction as default to place block normally
+                blockHitResult = new BlockHitResult(hitVec.get(), Direction.DOWN, state.blockPos, false);
+            } else {
+                blockHitResult = new BlockHitResult(hitVec.get(), validSide.get().getOpposite(),
+                        state.blockPos.offset(validSide.get()), false);
+            }
 
             return new PrinterPlacementContext(player, blockHitResult, requiredItem.get(), requiredSlot,
                     lookDirection.orElse(null), requiresShift);
