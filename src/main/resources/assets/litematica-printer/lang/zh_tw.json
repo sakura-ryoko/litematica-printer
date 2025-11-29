@@ -1,5 +1,6 @@
 {
     "litematica-printer.config.generic.comment.interactBlocks": "是否自動設定方塊狀態（如開關、方向等）。",
+    "litematica-printer.config.generic.comment.printInAir": "允許方塊在空中放置，無需在下方提供支撐方塊。",
     "litematica-printer.config.generic.comment.printingDebug": "開啟投影列印機除錯日誌。",
     "litematica-printer.config.generic.comment.printingInterval": "列印間隔（單位：tick）。數值越低列印速度越快。\n如果出現\"幽靈方塊\"或方塊朝向錯誤，請提高此數值。",
     "litematica-printer.config.generic.comment.printingMode": "自動建造/列印已載入的選區\n請注意某些伺服器和反作弊插件可能禁止自動列印功能。",
@@ -13,6 +14,7 @@
     "litematica-printer.config.generic.name.printingRange": "列印 - 範圍",
     "litematica-printer.config.generic.name.replaceFluidSourceBlocks": "列印 - 替換流體源方塊",
     "litematica-printer.config.generic.name.stripLogs": "列印 - 原木剝皮",
+    "litematica-printer.config.generic.name.printInAir": "列印 - 空中建造",
     "litematica-printer.config.generic.prettyName.interactBlocks": "方塊交互",
     "litematica-printer.config.generic.prettyName.printingDebug": "列印除錯模式",
     "litematica-printer.config.generic.prettyName.printingInterval": "列印間隔",
@@ -20,6 +22,7 @@
     "litematica-printer.config.generic.prettyName.printingRange": "列印範圍",
     "litematica-printer.config.generic.prettyName.replaceFluidSourceBlocks": "替換流體源方塊",
     "litematica-printer.config.generic.prettyName.stripLogs": "原木剝皮",
+    "litematica-printer.config.generic.prettyName.printInAir": "空中建造",
     "litematica-printer.config.hotkeys.comment.print": "按住按鍵時持續列印",
     "litematica-printer.config.hotkeys.comment.togglePrintingMode": "快速切換列印模式的開關狀態",
     "litematica-printer.config.hotkeys.name.print": "列印",
