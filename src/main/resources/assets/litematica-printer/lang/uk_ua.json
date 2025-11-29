@@ -1,5 +1,6 @@
 {
     "litematica-printer.config.generic.comment.interactBlocks": "Чи повинен друк установлювати стан блоку.",
+    "litematica-printer.config.generic.comment.printInAir": "Дозволяє розміщувати блоки в повітрі без необхідності підтримувальних блоків під ними.",
     "litematica-printer.config.generic.comment.printingDebug": "Вмикає журнал налагодження для друку.",
     "litematica-printer.config.generic.comment.printingInterval": "Інтервал друку. Менші значення означають більшу швидкість друку.\nЯкщо друк створює «блоки-привиди» або блоки спрямовані неправильно, збільште це значення.",
     "litematica-printer.config.generic.comment.printingMode": "Автоматична збірка/друк завантаженого вибору.\nЗверніть увагу, що деякі сервери та плаґіни для захисту від читів не дозволяють друкувати.",
@@ -13,6 +14,7 @@
     "litematica-printer.config.generic.name.printingRange": "printingRange",
     "litematica-printer.config.generic.name.replaceFluidSourceBlocks": "replaceFluidSourceBlocks",
     "litematica-printer.config.generic.name.stripLogs": "stripLogs",
+    "litematica-printer.config.generic.name.printInAir": "printInAir",
     "litematica-printer.config.generic.prettyName.interactBlocks": "Взаємодія з блоками",
     "litematica-printer.config.generic.prettyName.printingDebug": "Налагодження друку",
     "litematica-printer.config.generic.prettyName.printingInterval": "Інтервал друку",
@@ -20,6 +22,7 @@
     "litematica-printer.config.generic.prettyName.printingRange": "Діапазон друку",
     "litematica-printer.config.generic.prettyName.replaceFluidSourceBlocks": "Замінити блоки джерела рідини",
     "litematica-printer.config.generic.prettyName.stripLogs": "Обтесані колоди",
+    "litematica-printer.config.generic.prettyName.printInAir": "Друк в повітрі",
     "litematica-printer.config.hotkeys.comment.print": "Друкує під час натискання.",
     "litematica-printer.config.hotkeys.comment.togglePrintingMode": "Дозволяє швидко вмикати/вимикати режим друку.",
     "litematica-printer.config.hotkeys.name.print": "print",
