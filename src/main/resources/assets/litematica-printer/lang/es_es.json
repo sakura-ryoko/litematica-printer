@@ -1,5 +1,6 @@
 {
     "litematica-printer.config.generic.comment.interactBlocks": "Si la impresora debe establecer o no estados de bloque.",
+    "litematica-printer.config.generic.comment.printInAir": "Permitir que los bloques se coloquen en el aire sin necesidad de bloques de soporte debajo.",
     "litematica-printer.config.generic.comment.printingDebug": "Habilita el registro de depuración para la impresión.",
     "litematica-printer.config.generic.comment.printingInterval": "Intervalo de impresión. Los valores más bajos indican una mayor velocidad de impresión.\nSi la impresora crea \"Bloques fantasma\" o los bloques están orientados en la dirección incorrecta, aumente este valor.",
     "litematica-printer.config.generic.comment.printingMode": "Selección cargada de creación automática/impresión.\nTenga en cuenta que algunos servidores y complementos antitrampas no permiten la impresión.",
@@ -13,6 +14,7 @@
     "litematica-printer.config.generic.name.printingRange": "Rango de impresión",
     "litematica-printer.config.generic.name.replaceFluidSourceBlocks": "Reemplazar los bloques de fuente de fluido",
     "litematica-printer.config.generic.name.stripLogs": "Registros de corteza",
+    "litematica-printer.config.generic.name.printInAir": "Imprimir en el aire",
     "litematica-printer.config.generic.prettyName.interactBlocks": "Bloques interactivos",
     "litematica-printer.config.generic.prettyName.printingDebug": "Depuración de impresión",
     "litematica-printer.config.generic.prettyName.printingInterval": "Intervalo de impresión",
@@ -20,6 +22,7 @@
     "litematica-printer.config.generic.prettyName.printingRange": "Gama de impresión",
     "litematica-printer.config.generic.prettyName.replaceFluidSourceBlocks": "Reemplazar los bloques de fuente de fluido",
     "litematica-printer.config.generic.prettyName.stripLogs": "Registro de corteza",
+    "litematica-printer.config.generic.prettyName.printInAir": "Imprimir en el aire",
     "litematica-printer.config.hotkeys.comment.print": "Imprime mientras se presiona",
     "litematica-printer.config.hotkeys.comment.togglePrintingMode": "Permite alternar rápidamente entre habilitado y desactivado del modo de impresión",
     "litematica-printer.config.hotkeys.name.print": "Imprimir",
