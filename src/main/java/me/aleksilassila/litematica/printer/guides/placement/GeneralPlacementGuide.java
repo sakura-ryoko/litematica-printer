@@ -58,7 +58,15 @@ public class GeneralPlacementGuide extends PlacementGuide {
 
         if (printInAir && !getRequiresSupport()) {
             // When printInAir is enabled, we can place directly without support
-            return Optional.of(Direction.UP); // Use any direction as we'll target the position directly
+            // But we should still respect the intended orientation for directional blocks
+            // Check if we have specific sides defined by the subclass (like for logs)
+            if (!sides.isEmpty()) {
+                // Use the first available side from the specific sides (e.g., axis-specific for logs)
+                return Optional.of(sides.get(0));
+            } else {
+                // Fallback to UP if no specific sides are defined
+                return Optional.of(Direction.UP);
+            }
         }
 
         List<Direction> validSides = new ArrayList<>();
@@ -125,9 +133,28 @@ public class GeneralPlacementGuide extends PlacementGuide {
             BlockHitResult blockHitResult;
 
             if (printInAir && !getRequiresSupport()) {
-                // For air placement, target the block position directly with a reasonable side
-                // Using UP direction as default to place block normally
-                blockHitResult = new BlockHitResult(hitVec.get(), Direction.DOWN, state.blockPos, false);
+                // For air placement, target the block position directly
+                // Use a hit side that allows the block to maintain its intended orientation
+                // The specific side depends on the block type and its intended orientation
+                Direction hitSide = validSide.get().getOpposite(); // Use the opposite of the valid side to maintain orientation
+
+                // For pillar blocks like logs, we need to be more specific about the hit side
+                if (targetState.contains(net.minecraft.block.PillarBlock.AXIS)) {
+                    // For pillar blocks, use a side perpendicular to the intended axis
+                    Direction.Axis axis = targetState.get(net.minecraft.block.PillarBlock.AXIS);
+                    if (axis == Direction.Axis.Y) {
+                        hitSide = Direction.DOWN; // vertical log - hit from above
+                    } else if (axis == Direction.Axis.X) {
+                        hitSide = Direction.WEST; // horizontal log along X - hit from West/East side
+                    } else { // Z axis
+                        hitSide = Direction.NORTH; // horizontal log along Z - hit from North/South side
+                    }
+                } else {
+                    // For non-pillars, use DOWN as default to place normally
+                    hitSide = Direction.DOWN;
+                }
+
+                blockHitResult = new BlockHitResult(hitVec.get(), hitSide, state.blockPos, false);
             } else {
                 blockHitResult = new BlockHitResult(hitVec.get(), validSide.get().getOpposite(),
                         state.blockPos.offset(validSide.get()), false);
