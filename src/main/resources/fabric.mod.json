@@ -27,12 +27,12 @@
     "fabric": "*",
     "java": ">=21",
     "minecraft": ">=1.21.9 <=1.21.10",
-    "malilib": ">=0.26.2- <0.27.0-",
-    "litematica": ">=0.24.1- <0.25.0-"
+    "malilib": ">=0.26.4- <0.27.0-",
+    "litematica": ">=0.24.3- <0.25.0-"
   },
   "breaks": {
-    "malilib": "<0.26.2-",
-    "litematica": "<0.24.1-"
+    "malilib": "<0.26.4-",
+    "litematica": "<0.24.3-"
   },
   "custom": {
     "modmenu": {
