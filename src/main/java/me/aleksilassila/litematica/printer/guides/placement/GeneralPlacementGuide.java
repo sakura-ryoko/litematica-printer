@@ -48,13 +48,27 @@ public class GeneralPlacementGuide extends PlacementGuide {
     }
 
     private Optional<Direction> getValidSide(SchematicBlockState state) {
+        boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
+
         List<Direction> sides = getPossibleSides();
 
         if (sides.isEmpty()) {
             return Optional.empty();
         }
 
-        // First, try normal placement logic (the original else branch)
+        if (printInAir && !getRequiresSupport()) {
+            // When printInAir is enabled, we can place directly without support
+            // But we should still respect the intended orientation for directional blocks
+            // Check if we have specific sides defined by the subclass (like for logs)
+            if (!sides.isEmpty()) {
+                // Use the first available side from the specific sides (e.g., axis-specific for logs)
+                return Optional.of(sides.get(0));
+            } else {
+                // Fallback to UP if no specific sides are defined
+                return Optional.of(Direction.UP);
+            }
+        }
+
         List<Direction> validSides = new ArrayList<>();
         for (Direction side : sides) {
             SchematicBlockState neighborState = state.offset(side);
@@ -69,35 +83,13 @@ public class GeneralPlacementGuide extends PlacementGuide {
                 validSides.add(side);
         }
 
-        // If we found valid sides for normal placement, use them (prioritizing non-interactive blocks)
         for (Direction validSide : validSides) {
             if (!isInteractive(state.offset(validSide).currentState.getBlock())) {
                 return Optional.of(validSide);
             }
         }
 
-        if (!validSides.isEmpty()) {
-            return Optional.of(validSides.getFirst());
-        }
-
-        // If no valid sides found for normal placement and printInAir is enabled,
-        // then try air placement
-        boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
-        if (printInAir && !getRequiresSupport()) {
-            // When printInAir is enabled and no support is available, we can place directly without support
-            // But we should still respect the intended orientation for directional blocks
-            // Check if we have specific sides defined by the subclass (like for logs)
-            if (!sides.isEmpty()) {
-                // Use the first available side from the specific sides (e.g., axis-specific for logs)
-                return Optional.of(sides.get(0));
-            } else {
-                // Fallback to UP if no specific sides are defined
-                return Optional.of(Direction.UP);
-            }
-        }
-
-        // If no valid sides found and printInAir is not enabled, return empty
-        return Optional.empty();
+        return validSides.isEmpty() ? Optional.empty() : Optional.of(validSides.getFirst());
     }
 
     protected boolean getUseShift(SchematicBlockState state) {
@@ -111,48 +103,16 @@ public class GeneralPlacementGuide extends PlacementGuide {
     }
 
     private Optional<Vec3d> getHitVector(SchematicBlockState state) {
-        // Check if normal placement would work
-        List<Direction> sides = getPossibleSides();
-        boolean hasNormalSupport = false;
-
-        // Check if normal placement would work (same logic as in getValidSide)
-        List<Direction> validSides = new ArrayList<>();
-        if (!sides.isEmpty()) {
-            for (Direction side : sides) {
-                SchematicBlockState neighborState = state.offset(side);
-
-                if (getProperty(neighborState.currentState, SlabBlock.TYPE).orElse(null) == SlabType.DOUBLE) {
-                    validSides.add(side);
-                    continue;
-                }
-
-                if (canBeClicked(neighborState.world, neighborState.blockPos) &&
-                        !neighborState.currentState.isReplaceable())
-                    validSides.add(side);
-            }
-        }
-
         boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
-        boolean requiresSupport = getRequiresSupport();
 
-        // If we have valid sides for normal placement, use normal hit vector
-        if (!validSides.isEmpty()) {
-            Optional<Direction> validSide = getValidSide(state);
-            if (validSide.isPresent()) {
-                return validSide.map(side -> Vec3d.ofCenter(state.blockPos)
-                        .add(Vec3d.of(side.getVector()).multiply(0.5))
-                        .add(getHitModifier(side)));
-            }
-        }
-
-        // If no valid sides for normal placement but air placement is enabled, use air placement
-        if (printInAir && !requiresSupport) {
+        if (printInAir && !getRequiresSupport()) {
             // For air placement, target the center of the target block position
             return Optional.of(Vec3d.ofCenter(state.blockPos));
         }
 
-        // Otherwise, return empty
-        return Optional.empty();
+        return getValidSide(state).map(side -> Vec3d.ofCenter(state.blockPos)
+                .add(Vec3d.of(side.getVector()).multiply(0.5))
+                .add(getHitModifier(side)));
     }
 
     @Nullable
@@ -169,32 +129,10 @@ public class GeneralPlacementGuide extends PlacementGuide {
             Optional<Direction> lookDirection = getLookDirection();
             boolean requiresShift = getUseShift(state);
 
-            // Determine if we should use air placement by checking if normal placement would have worked
-            List<Direction> sides = getPossibleSides();
-
-            // Check if normal placement would work (same logic as in getValidSide)
-            List<Direction> normalValidSides = new ArrayList<>();
-            if (!sides.isEmpty()) {
-                for (Direction side : sides) {
-                    SchematicBlockState neighborState = state.offset(side);
-
-                    if (getProperty(neighborState.currentState, SlabBlock.TYPE).orElse(null) == SlabType.DOUBLE) {
-                        normalValidSides.add(side);
-                        continue;
-                    }
-
-                    if (canBeClicked(neighborState.world, neighborState.blockPos) &&
-                            !neighborState.currentState.isReplaceable())
-                        normalValidSides.add(side);
-                }
-            }
-
             boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
-            boolean requiresSupport = getRequiresSupport();
-
             BlockHitResult blockHitResult;
 
-            if (printInAir && !requiresSupport && normalValidSides.isEmpty()) {
+            if (printInAir && !getRequiresSupport()) {
                 // For air placement, target the block position directly
                 // Use a hit side that allows the block to maintain its intended orientation
                 // The specific side depends on the block type and its intended orientation
