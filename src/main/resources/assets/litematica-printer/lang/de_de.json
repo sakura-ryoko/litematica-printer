@@ -1,0 +1,37 @@
+{
+  "litematica-printer.config.generic.name.printingInterval": "Druckintervall",
+  "litematica-printer.config.generic.name.printingRange": "Platzierungsreichweite",
+  "litematica-printer.config.generic.name.printingMode": "Baumodus",
+  "litematica-printer.config.generic.name.printingDebug": "Druck-Debug",
+  "litematica-printer.config.generic.name.replaceFluidSourceBlocks": "Wasser-/Lavaquellen ersetzen",
+  "litematica-printer.config.generic.name.stripLogs": "Stämme entrinden",
+  "litematica-printer.config.generic.name.interactBlocks": "Blockzustände setzen",
+  "litematica-printer.config.generic.name.printInAir": "In der Luft platzieren",
+
+  "litematica-printer.config.generic.prettyName.printingInterval": "Druckintervall",
+  "litematica-printer.config.generic.prettyName.printingRange": "Platzierungsreichweite",
+  "litematica-printer.config.generic.prettyName.printingMode": "Baumodus",
+  "litematica-printer.config.generic.prettyName.printingDebug": "Druck-Debug",
+  "litematica-printer.config.generic.prettyName.replaceFluidSourceBlocks": "Wasser-/Lavaquellen ersetzen",
+  "litematica-printer.config.generic.prettyName.stripLogs": "Stämme entrinden",
+  "litematica-printer.config.generic.prettyName.interactBlocks": "Blockzustände setzen",
+  "litematica-printer.config.generic.prettyName.printInAir": "In der Luft platzieren",
+
+  "litematica-printer.config.generic.comment.printingInterval": "Zeit zwischen Platzierungen. Kleinere Werte = schneller.\nWenn Geisterblöcke oder falsche Ausrichtung auftreten, Wert erhöhen.",
+  "litematica-printer.config.generic.comment.printingRange": "Reichweite, in der Blöcke platziert werden.\nFür Server kleinere Werte nutzen.",
+  "litematica-printer.config.generic.comment.printingMode": "Auto-Bauen: geladene Auswahl automatisch platzieren.\nManche Server/Anti-Cheat verbieten das.",
+  "litematica-printer.config.generic.comment.printingDebug": "Schaltet detaillierte Druck-Logs ein.",
+  "litematica-printer.config.generic.comment.replaceFluidSourceBlocks": "Sollen Wasser- oder Lavaquellen ersetzt werden?",
+  "litematica-printer.config.generic.comment.stripLogs": "Wenn keine entrindeten Stämme da sind, normale setzen und mit der Axt entrinden.",
+  "litematica-printer.config.generic.comment.interactBlocks": "Blockzustände setzen (z.B. Türen, Hebel, Klappen).",
+  "litematica-printer.config.generic.comment.printInAir": "Blöcke ohne Stützblock frei in der Luft platzieren.",
+
+  "litematica-printer.config.hotkeys.name.print": "Drucken",
+  "litematica-printer.config.hotkeys.name.togglePrintingMode": "Druckmodus umschalten",
+
+  "litematica-printer.config.hotkeys.prettyName.print": "Drucken",
+  "litematica-printer.config.hotkeys.prettyName.togglePrintingMode": "Druckmodus umschalten",
+
+  "litematica-printer.config.hotkeys.comment.print": "Platziert, solange gehalten.",
+  "litematica-printer.config.hotkeys.comment.togglePrintingMode": "Schaltet den Druckmodus schnell an/aus."
+}
