@@ -21,6 +21,7 @@ public class Configs {
     public static final ConfigBoolean STRIP_LOGS = new ConfigBoolean("stripLogs", true).apply(GENERIC_KEY);
     public static final ConfigBoolean INTERACT_BLOCKS = new ConfigBoolean("interactBlocks", true).apply(GENERIC_KEY);
     public static final ConfigBoolean PRINT_IN_AIR = new ConfigBoolean("printInAir", false).apply(GENERIC_KEY);
+    public static final ConfigBoolean ROTATE = new ConfigBoolean("rotate", true).apply(GENERIC_KEY);
 
     public static ImmutableList<IConfigBase> getConfigList() {
         List<IConfigBase> list = new java.util.ArrayList<>(fi.dy.masa.litematica.config.Configs.Generic.OPTIONS);
@@ -32,6 +33,7 @@ public class Configs {
         list.add(STRIP_LOGS);
         list.add(INTERACT_BLOCKS);
         list.add(PRINT_IN_AIR);
+        list.add(ROTATE);
 
         return ImmutableList.copyOf(list);
     }

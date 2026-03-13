@@ -1,6 +1,7 @@
 package me.aleksilassila.litematica.printer.actions;
 
 import me.aleksilassila.litematica.printer.Printer;
+import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -72,14 +73,16 @@ public class PrepareAction extends Action {
             }
         }
 
-        if (modifyPitch || modifyYaw) {
-            float yaw = modifyYaw ? this.yaw : player.getYRot();
-            float pitch = modifyPitch ? this.pitch : player.getXRot();
+        if (Configs.ROTATE.getBooleanValue()) {
+            if (modifyPitch || modifyYaw) {
+                float yaw = modifyYaw ? this.yaw : player.getYRot();
+                float pitch = modifyPitch ? this.pitch : player.getXRot();
 
-            ServerboundMovePlayerPacket packet = new ServerboundMovePlayerPacket.PosRot(player.getX(), player.getY(), player.getZ(), yaw,
-                    pitch, player.onGround(), player.horizontalCollision);
+                ServerboundMovePlayerPacket packet = new ServerboundMovePlayerPacket.PosRot(player.getX(), player.getY(), player.getZ(), yaw,
+                        pitch, player.onGround(), player.horizontalCollision);
 
-            player.connection.send(packet);
+                player.connection.send(packet);
+            }
         }
 
         if (context.shouldSneak) {
