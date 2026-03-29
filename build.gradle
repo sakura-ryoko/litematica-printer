@@ -1,0 +1,118 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version '1.15.+'
+	id 'maven-publish'
+}
+
+repositories {
+	maven {url = "https://masa.dy.fi/maven/sakura-ryoko"
+		content {includeGroupAndSubgroups("fi.dy.masa")}
+	}
+	maven {url = 'https://maven.fallenbreath.me/releases'
+		content {includeGroupAndSubgroups("me.fallenbreath")}
+	}
+	maven {url = 'https://maven.terraformersmc.com/releases/'
+		content { includeGroupAndSubgroups("com.terraformersmc")}
+	}
+	maven { url = 'https://jitpack.io'
+		content { includeGroupAndSubgroups("io.github")}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+//    mappings loom.officialMojangMappings()
+	implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+	implementation "com.google.code.findbugs:jsr305:3.0.2"
+//	implementation "org.jspecify:jspecify:1.0.0"
+
+	implementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version_out}:${project.malilib_version}"
+	implementation "fi.dy.masa.litematica:litematica-fabric-${project.minecraft_version_out}:${project.litematica_version}"
+//	implementation "com.github.sakura-ryoko:malilib:${project.malilib_version}"
+//	implementation "com.github.sakura-ryoko:litematica:${project.litematica_version}"
+
+	api fabricApi.module("fabric-api-base", project.fabric_api_version)
+
+	compileOnly "com.terraformersmc:modmenu:${project.mod_menu_version}"
+//	runtimeOnly 'me.fallenbreath:mixin-auditor:0.2.0-u'
+}
+
+base {
+	group = project.group + "." + project.mod_id
+	archivesName = project.mod_file_name + '-' + project.minecraft_version_out
+	version = project.mod_version
+
+	if (version.endsWith('-dev')) {
+		version += "." + new Date().format('yyyyMMdd.HHmmss')
+	}
+}
+
+loom {
+//	def commonVmArgs = ['-Dmixin.debug.export=true', '-Dmixin.debug.countInjections=true']
+//	// [FEATURE] MIXIN_AUDITOR
+//	runs {
+//		def auditVmArgs = [*commonVmArgs, '-DmixinAuditor.audit=true']
+//		clientMixinAudit {
+//			client()
+//			vmArgs auditVmArgs
+//			ideConfigGenerated false
+//		}
+//		serverMixinAudit {
+//			server()
+//			vmArgs auditVmArgs
+//			ideConfigGenerated false
+//		}
+//	}
+}
+
+processResources {
+	exclude '**/*.xcf'
+	exclude '**/xcf'
+
+	inputs.property "mod_version", project.mod_version
+
+	filesMatching("fabric.mod.json") {
+		expand "mod_version": project.mod_version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = "UTF-8"
+	it.options.release = 25
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+	preserveFileTimestamps = true
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${base.archivesName}"}
+	}
+}
+
+tasks.publish.dependsOn build
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			// add all the jars that should be included when publishing to maven
+			//artifact(jar)             { builtBy remapJar }
+			artifactId = base.archivesName.get()
+			from components.java
+		}
+	}
+
+	repositories {
+		maven {
+			url = "$projectDir/../../CommonMaven"
+		}
+	}
+}
