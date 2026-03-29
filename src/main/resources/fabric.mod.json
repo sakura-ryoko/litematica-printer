@@ -24,11 +24,11 @@
     "litematica-printer-implementation.mixins.json"
   ],
   "depends": {
-    "fabric": "*",
-    "java": ">=21",
-    "minecraft": "1.21.11",
-    "malilib": ">=0.27.0- <0.28.0-",
-    "litematica": ">=0.25.0- <0.27.0-"
+    "fabric-api": "*",
+    "java": ">=25",
+    "minecraft": ">26",
+    "malilib": ">=0.28.0- <0.29.0-",
+    "litematica": ">=0.27.0- <0.28.0-"
   },
   "breaks": {
     "malilib": "<0.27.3-",

@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom").version("1.15-SNAPSHOT")
+    id("net.fabricmc.fabric-loom").version("1.15-SNAPSHOT")
     id("maven-publish")
 }
 
@@ -20,8 +20,8 @@ val mod_version: String by project
 java {
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 repositories {
@@ -37,11 +37,10 @@ repositories {
 dependencies {
     minecraft("com.mojang:minecraft:${minecraft_version}")
 //    mappings("net.fabricmc:yarn:${mappings_version}:v2")
-    mappings(loom.officialMojangMappings())
     implementation("com.google.code.findbugs:jsr305:3.0.2")
 
-    modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
+    implementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
     //modImplementation("curse.maven:litematica-${litematica_projectid}:${litematica_fileid}")
 
     // Masa's Maven
@@ -49,11 +48,11 @@ dependencies {
 //    modImplementation("fi.dy.masa.litematica:litematica-fabric-${minecraft_version_out}:${litematica_version}")
 
     // Sakura's Jitpack
-    modImplementation("com.github.sakura-ryoko:malilib:${malilib_version}")
-    modImplementation("com.github.sakura-ryoko:litematica:${litematica_version}")
+    implementation("com.github.sakura-ryoko:malilib:${malilib_version}")
+    implementation("com.github.sakura-ryoko:litematica:${litematica_version}")
 
     // For Mod Menu display
-    modCompileOnly("com.terraformersmc:modmenu:${mod_menu_version}")
+    compileOnly("com.terraformersmc:modmenu:${mod_menu_version}")
 //    modRuntimeOnly("me.fallenbreath:mixin-auditor:0.1.0")
 }
 

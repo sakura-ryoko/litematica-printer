@@ -22,8 +22,8 @@ public class Guides {
         registerGuide(RotatingBlockGuide.class, AbstractSkullBlock.class, SignBlock.class, AbstractBannerBlock.class);
         registerGuide(SlabGuide.class, SlabBlock.class);
         registerGuide(TorchGuide.class, TorchBlock.class);
-        registerGuide(FarmlandGuide.class, FarmBlock.class);
-        registerGuide(TillingGuide.class, FarmBlock.class);
+        registerGuide(FarmlandGuide.class, FarmlandBlock.class);
+        registerGuide(TillingGuide.class, FarmlandBlock.class);
         registerGuide(RailGuesserGuide.class, BaseRailBlock.class);
         registerGuide(ChestGuide.class, ChestBlock.class);
         registerGuide(FlowerPotGuide.class, FlowerPotBlock.class);
