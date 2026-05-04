@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import me.aleksilassila.litematica.printer.Printer;
+import me.aleksilassila.litematica.printer.PlacementDebug;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import me.aleksilassila.litematica.printer.actions.Action;
 import me.aleksilassila.litematica.printer.actions.PrepareAction;
@@ -61,7 +62,9 @@ abstract public class PlacementGuide extends Guide {
     @Override
     protected @Nonnull List<ItemStack> getRequiredItems() {
         Printer.printDebug("PlacementGuide#getRequiredItems() - target state [{}]", state.targetState.toString());
-        return Collections.singletonList(getBlockItem(state.targetState));
+        ItemStack stack = getBlockItem(state.targetState);
+        PlacementDebug.log("placement requiredItems target={} item={}", state.targetState, PlacementDebug.stack(stack));
+        return Collections.singletonList(stack);
     }
 
     abstract protected boolean getUseShift(SchematicBlockState state);
@@ -71,29 +74,58 @@ abstract public class PlacementGuide extends Guide {
 
     @Override
     public boolean canExecute(LocalPlayer player) {
-        if (!super.canExecute(player))
+        if (!super.canExecute(player)) {
             return false;
+        }
 
         List<ItemStack> requiredItems = getRequiredItems();
-        if (requiredItems.isEmpty() || requiredItems.stream().allMatch(i -> i.is(Items.AIR)))
+        if (requiredItems.isEmpty() || requiredItems.stream().allMatch(i -> i.is(Items.AIR))) {
+            PlacementDebug.log("placement canExecute false reason=missing-item-or-air-item guide={} target={} requiredItems={}",
+                    getClass().getSimpleName(), targetState, requiredItems);
             return false;
+        }
 
         BlockPlaceContext ctx = getPlacementContext(player);
-        if (ctx == null || !ctx.canPlace()) return false;
+        if (ctx == null) {
+            PlacementDebug.log("placement canExecute false reason=placement-context-fail guide={} target={} pos={}",
+                    getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos));
+            return false;
+        }
+        if (!ctx.canPlace()) {
+            PlacementDebug.log("placement canExecute false reason=wrong-current-block ctxCanPlace=false guide={} target={} current={} pos={} ctx={}",
+                    getClass().getSimpleName(), targetState, currentState, PlacementDebug.pos(state.blockPos), ctx);
+            return false;
+        }
 //        if (!state.currentState.getMaterial().isReplaceable()) return false;
         if (!Configs.REPLACE_FLUIDS_SOURCE_BLOCKS.getBooleanValue()
-                && getProperty(state.currentState, LiquidBlock.LEVEL).orElse(1) == 0)
+                && getProperty(state.currentState, LiquidBlock.LEVEL).orElse(1) == 0) {
+            PlacementDebug.log("placement canExecute false reason=block-specific-condition-fail-fluid-source guide={} target={} current={}",
+                    getClass().getSimpleName(), targetState, currentState);
             return false;
+        }
 
         BlockState resultState = getRequiredItemAsBlock(player)
                 .orElse(targetState.getBlock())
                 .getStateForPlacement(ctx);
 
         if (resultState != null) {
-            if (!resultState.canSurvive(state.world, state.blockPos))
+            if (!resultState.canSurvive(state.world, state.blockPos)) {
+                PlacementDebug.log("placement canExecute false reason=no-support-block guide={} target={} resultState={} pos={}",
+                        getClass().getSimpleName(), targetState, resultState, PlacementDebug.pos(state.blockPos));
                 return false;
-            return !(currentState.getBlock() instanceof LiquidBlock) || canPlaceInWater(resultState);
+            }
+            boolean canPlaceInWater = !(currentState.getBlock() instanceof LiquidBlock) || canPlaceInWater(resultState);
+            if (!canPlaceInWater) {
+                PlacementDebug.log("placement canExecute false reason=block-specific-condition-fail-water guide={} target={} resultState={} current={}",
+                        getClass().getSimpleName(), targetState, resultState, currentState);
+            } else {
+                PlacementDebug.log("placement canExecute true guide={} target={} current={} resultState={} ctx={}",
+                        getClass().getSimpleName(), targetState, currentState, resultState, ctx);
+            }
+            return canPlaceInWater;
         } else {
+            PlacementDebug.log("placement canExecute false reason=placement-context-fail-null-result-state guide={} target={} ctx={}",
+                    getClass().getSimpleName(), targetState, ctx);
             return false;
         }
     }
@@ -103,11 +135,17 @@ abstract public class PlacementGuide extends Guide {
         List<Action> actions = new ArrayList<>();
         PrinterPlacementContext ctx = getPlacementContext(player);
 
-        if (ctx == null) return actions;
+        if (ctx == null) {
+            PlacementDebug.log("placement execute no-actions reason=placement-context-fail guide={} target={} pos={}",
+                    getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos));
+            return actions;
+        }
         actions.add(new PrepareAction(ctx));
         actions.add(new InteractActionImpl(ctx));
         if (ctx.shouldSneak) actions.add(new ReleaseShiftAction());
 
+        PlacementDebug.log("placement execute actions guide={} target={} pos={} count={} ctx={}",
+                getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos), actions.size(), ctx);
         return actions;
     }
 

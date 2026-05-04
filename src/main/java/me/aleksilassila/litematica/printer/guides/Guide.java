@@ -1,6 +1,7 @@
 package me.aleksilassila.litematica.printer.guides;
 
 import me.aleksilassila.litematica.printer.SchematicBlockState;
+import me.aleksilassila.litematica.printer.PlacementDebug;
 import me.aleksilassila.litematica.printer.actions.Action;
 import me.aleksilassila.litematica.printer.implementation.BlockHelperImpl;
 import net.minecraft.client.player.LocalPlayer;
@@ -26,7 +27,10 @@ abstract public class Guide extends BlockHelperImpl {
     }
 
     protected boolean playerHasRightItem(LocalPlayer player) {
-        return getRequiredItemStackSlot(player) != -1;
+        int slot = getRequiredItemStackSlot(player);
+        PlacementDebug.log("guide required target={} guide={} slot={} hasItem={}",
+                targetState, getClass().getSimpleName(), slot, slot != -1);
+        return slot != -1;
     }
 
     protected int getSlotWithItem(LocalPlayer player, ItemStack itemStack) {
@@ -55,13 +59,20 @@ abstract public class Guide extends BlockHelperImpl {
 
     public boolean canExecute(LocalPlayer player) {
         if (!playerHasRightItem(player)) {
+            PlacementDebug.log("guide canExecute false reason=missing-item guide={} target={} current={}",
+                    getClass().getSimpleName(), targetState, currentState);
             return false;
         }
 
         BlockState targetState = state.targetState;
         BlockState currentState = state.currentState;
 
-        return !statesEqual(targetState, currentState);
+        boolean mismatch = !statesEqual(targetState, currentState);
+        if (!mismatch) {
+            PlacementDebug.log("guide canExecute false reason=wrong-current-block-or-state-already-matches guide={} target={} current={}",
+                    getClass().getSimpleName(), targetState, currentState);
+        }
+        return mismatch;
     }
 
     abstract public @Nonnull List<Action> execute(LocalPlayer player);
@@ -74,6 +85,13 @@ abstract public class Guide extends BlockHelperImpl {
      */
     protected Optional<ItemStack> getRequiredItem(LocalPlayer player) {
         List<ItemStack> requiredItems = getRequiredItems();
+        if (PlacementDebug.enabled()) {
+            for (ItemStack requiredItem : requiredItems) {
+                PlacementDebug.log("guide requiredItem target={} guide={} item={} location={}",
+                        targetState, getClass().getSimpleName(), PlacementDebug.stack(requiredItem),
+                        PlacementDebug.inventoryLocation(player, requiredItem));
+            }
+        }
 
         for (ItemStack requiredItem : requiredItems) {
             if (player.getAbilities().instabuild) {

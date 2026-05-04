@@ -1,6 +1,7 @@
 package me.aleksilassila.litematica.printer.guides.placement;
 
 import me.aleksilassila.litematica.printer.Printer;
+import me.aleksilassila.litematica.printer.PlacementDebug;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
@@ -53,6 +54,8 @@ public class GeneralPlacementGuide extends PlacementGuide {
         List<Direction> sides = getPossibleSides();
 
         if (sides.isEmpty()) {
+            PlacementDebug.log("placement validSide none reason=block-specific-condition-fail-no-sides guide={} target={} pos={}",
+                    getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos));
             return Optional.empty();
         }
 
@@ -85,10 +88,19 @@ public class GeneralPlacementGuide extends PlacementGuide {
 
         for (Direction validSide : validSides) {
             if (!isInteractive(state.offset(validSide).currentState.getBlock())) {
+                PlacementDebug.log("placement validSide guide={} target={} pos={} side={} validSides={}",
+                        getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos), validSide, validSides);
                 return Optional.of(validSide);
             }
         }
 
+        if (validSides.isEmpty()) {
+            PlacementDebug.log("placement validSide none reason=no-support-block guide={} target={} pos={} printInAir={} requiresSupport={} possibleSides={}",
+                    getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos), printInAir, getRequiresSupport(), sides);
+        } else {
+            PlacementDebug.log("placement validSide interactive guide={} target={} pos={} side={} validSides={}",
+                    getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos), validSides.getFirst(), validSides);
+        }
         return validSides.isEmpty() ? Optional.empty() : Optional.of(validSides.getFirst());
     }
 
@@ -123,8 +135,12 @@ public class GeneralPlacementGuide extends PlacementGuide {
             Optional<ItemStack> requiredItem = getRequiredItem(player);
             int requiredSlot = getRequiredItemStackSlot(player);
 
-            if (validSide.isEmpty() || hitVec.isEmpty() || requiredItem.isEmpty() || requiredSlot == -1)
+            if (validSide.isEmpty() || hitVec.isEmpty() || requiredItem.isEmpty() || requiredSlot == -1) {
+                PlacementDebug.log("placement context null guide={} target={} pos={} validSide={} hitVecPresent={} requiredItemPresent={} requiredSlot={}",
+                        getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos), validSide.orElse(null),
+                        hitVec.isPresent(), requiredItem.isPresent(), requiredSlot);
                 return null;
+            }
 
             Optional<Direction> lookDirection = getLookDirection();
             boolean requiresShift = getUseShift(state);
@@ -160,10 +176,17 @@ public class GeneralPlacementGuide extends PlacementGuide {
                         state.blockPos.relative(validSide.get()), false);
             }
 
-            return new PrinterPlacementContext(player, blockHitResult, requiredItem.get(), requiredSlot,
+            PrinterPlacementContext context = new PrinterPlacementContext(player, blockHitResult, requiredItem.get(), requiredSlot,
                     lookDirection.orElse(null), requiresShift);
+            PlacementDebug.log("placement context guide={} target={} pos={} hitBlock={} side={} hit={} requiredItem={} requiredSlot={} lookDirection={} sneak={} printInAir={}",
+                    getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos),
+                    PlacementDebug.pos(blockHitResult.getBlockPos()), blockHitResult.getDirection(), blockHitResult.getLocation(),
+                    PlacementDebug.stack(requiredItem.get()), requiredSlot, lookDirection.orElse(null), requiresShift, printInAir);
+            return context;
         } catch (Exception e) {
             Printer.logger.error("getPlacementContext(): Exception caught: {}", e.getMessage());
+            PlacementDebug.log("placement context exception guide={} target={} pos={} error={}",
+                    getClass().getSimpleName(), targetState, PlacementDebug.pos(state.blockPos), e.toString());
             //e.printStackTrace();
             return null;
         }

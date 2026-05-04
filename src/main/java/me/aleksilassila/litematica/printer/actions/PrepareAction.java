@@ -1,6 +1,7 @@
 package me.aleksilassila.litematica.printer.actions;
 
 import me.aleksilassila.litematica.printer.Printer;
+import me.aleksilassila.litematica.printer.PlacementDebug;
 import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
 import net.minecraft.client.Minecraft;
@@ -54,6 +55,11 @@ public class PrepareAction extends Action {
         ItemStack itemStack = context.getItemInHand();
         int slot = context.requiredItemSlot;
 
+        PlacementDebug.log("prepare begin targetPos={} requiredSlot={} requiredItem={} selectedSlot={} selectedItem={} instabuild={} shouldSneak={} rotate={} yaw={} pitch={}",
+                PlacementDebug.pos(context.getClickedPos()), slot, PlacementDebug.stack(itemStack),
+                player.getInventory().getSelectedSlot(), PlacementDebug.stack(player.getMainHandItem()),
+                player.getAbilities().instabuild, context.shouldSneak, Configs.ROTATE.getBooleanValue(), yaw, pitch);
+
         if (itemStack != null && !itemStack.isEmpty() && client.gameMode != null) {
             Printer.printDebug("PrepareAction#send(): slot [{}] // itemStack [{}]", slot, itemStack.toString());
             // This thing is straight from MinecraftClient#doItemPick()
@@ -62,15 +68,24 @@ public class PrepareAction extends Action {
             if (player.getAbilities().instabuild) {
                 this.addPickBlock(inventory, itemStack);
                 client.gameMode.handleCreativeModeItemAdd(player.getItemInHand(InteractionHand.MAIN_HAND), 36 + inventory.getSelectedSlot());
+                PlacementDebug.log("prepare creative selectedSlot={} selectedItem={} sentCreativeAddSlot={}",
+                        inventory.getSelectedSlot(), PlacementDebug.stack(player.getMainHandItem()), 36 + inventory.getSelectedSlot());
             } else if (slot != -1) {
                 if (Inventory.isHotbarSlot(slot)) {
                     inventory.setSelectedSlot(slot);
+                    PlacementDebug.log("prepare survival selectedHotbarSlot={} selectedItem={}",
+                            slot, PlacementDebug.stack(player.getMainHandItem()));
                 } else {
                     // TODO --> test this (pickFromInventory has been REMOVED)
                     //client.interactionManager.pickFromInventory(slot);
                     InventoryUtils.setPickedItemToHand(slot, itemStack, client);
+                    PlacementDebug.log("prepare survival pickedInventorySlot={} selectedSlot={} selectedItem={}",
+                            slot, inventory.getSelectedSlot(), PlacementDebug.stack(player.getMainHandItem()));
                 }
             }
+        } else {
+            PlacementDebug.log("prepare skipped itemOrGameMode item={} gameModeNull={}",
+                    PlacementDebug.stack(itemStack), client.gameMode == null);
         }
 
         if (Configs.ROTATE.getBooleanValue()) {
@@ -82,15 +97,19 @@ public class PrepareAction extends Action {
                         pitch, player.onGround(), player.horizontalCollision);
 
                 player.connection.send(packet);
+                PlacementDebug.log("prepare rotate sent yaw={} pitch={} modifyYaw={} modifyPitch={}",
+                        yaw, pitch, modifyYaw, modifyPitch);
             }
         }
 
         if (context.shouldSneak) {
             player.input.keyPresses = new Input(player.input.keyPresses.forward(), player.input.keyPresses.backward(), player.input.keyPresses.left(), player.input.keyPresses.right(), player.input.keyPresses.jump(), true, player.input.keyPresses.sprint());
             player.connection.send(new ServerboundPlayerInputPacket(player.input.keyPresses));
+            PlacementDebug.log("prepare sneak sent=true");
         } else {
             player.input.keyPresses = new Input(player.input.keyPresses.forward(), player.input.keyPresses.backward(), player.input.keyPresses.left(), player.input.keyPresses.right(), player.input.keyPresses.jump(), false, player.input.keyPresses.sprint());
             player.connection.send(new ServerboundPlayerInputPacket(player.input.keyPresses));
+            PlacementDebug.log("prepare sneak sent=false");
         }
     }
 
