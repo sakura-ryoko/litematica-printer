@@ -33,7 +33,7 @@
   },
   "breaks": {
     "malilib": "<0.28.99-",
-    "litematica": "<0.27.1-"
+    "litematica": "<0.27.99-"
   },
 
   "custom": {
