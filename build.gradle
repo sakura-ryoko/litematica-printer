@@ -14,7 +14,7 @@ repositories {
 		content { includeGroupAndSubgroups("com.terraformersmc")}
 	}
 	maven { url = 'https://jitpack.io'
-		content { includeGroupAndSubgroups("io.github")}
+		content { includeGroupAndSubgroups("com.github")}
 	}
 }
 
@@ -25,15 +25,15 @@ dependencies {
 	implementation "com.google.code.findbugs:jsr305:3.0.2"
 //	implementation "org.jspecify:jspecify:1.0.0"
 
-	implementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version_out}:${project.malilib_version}"
-	implementation "fi.dy.masa.litematica:litematica-fabric-${project.minecraft_version_out}:${project.litematica_version}"
-//	implementation "com.github.sakura-ryoko:malilib:${project.malilib_version}"
-//	implementation "com.github.sakura-ryoko:litematica:${project.litematica_version}"
+//	implementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version_out}:${project.malilib_version}"
+//	implementation "fi.dy.masa.litematica:litematica-fabric-${project.minecraft_version_out}:${project.litematica_version}"
+	implementation "com.github.sakura-ryoko:malilib:${project.malilib_version}"
+	implementation "com.github.sakura-ryoko:litematica:${project.litematica_version}"
 
 	api fabricApi.module("fabric-api-base", project.fabric_api_version)
 
 	compileOnly "com.terraformersmc:modmenu:${project.mod_menu_version}"
-//	runtimeOnly 'me.fallenbreath:mixin-auditor:0.2.0-u'
+	runtimeOnly 'me.fallenbreath:mixin-auditor:0.2.0-u'
 }
 
 base {
@@ -47,21 +47,21 @@ base {
 }
 
 loom {
-//	def commonVmArgs = ['-Dmixin.debug.export=true', '-Dmixin.debug.countInjections=true']
-//	// [FEATURE] MIXIN_AUDITOR
-//	runs {
-//		def auditVmArgs = [*commonVmArgs, '-DmixinAuditor.audit=true']
-//		clientMixinAudit {
-//			client()
-//			vmArgs auditVmArgs
-//			ideConfigGenerated false
-//		}
-//		serverMixinAudit {
-//			server()
-//			vmArgs auditVmArgs
-//			ideConfigGenerated false
-//		}
-//	}
+	def commonVmArgs = ['-Dmixin.debug.export=true', '-Dmixin.debug.countInjections=true']
+	// [FEATURE] MIXIN_AUDITOR
+	runs {
+		def auditVmArgs = [*commonVmArgs, '-DmixinAuditor.audit=true']
+		clientMixinAudit {
+			client()
+			vmArgs auditVmArgs
+			ideConfigGenerated false
+		}
+		serverMixinAudit {
+			server()
+			vmArgs auditVmArgs
+			ideConfigGenerated false
+		}
+	}
 }
 
 processResources {

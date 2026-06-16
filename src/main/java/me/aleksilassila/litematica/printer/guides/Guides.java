@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import me.aleksilassila.litematica.printer.guides.interaction.*;
 import me.aleksilassila.litematica.printer.guides.placement.*;
+import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.util.Tuple;
 import net.minecraft.world.level.block.*;
 
 public class Guides {
-    protected final static ArrayList<Tuple<Class<? extends Guide>, Class<? extends Block>[]>> guides = new ArrayList<>();
+    protected final static ArrayList<Pair<Class<? extends Guide>, Class<? extends Block>[]>> guides = new ArrayList<>();
 
     @SafeVarargs
     protected static void registerGuide(Class<? extends Guide> guideClass, Class<? extends Block>... blocks) {
-        guides.add(new Tuple<>(guideClass, blocks));
+        guides.add(Pair.of(guideClass, blocks));
     }
 
     static {
@@ -57,26 +57,26 @@ public class Guides {
         registerGuide(GuesserGuide.class);
     }
 
-    public ArrayList<Tuple<Class<? extends Guide>, Class<? extends Block>[]>> getGuides() {
+    public ArrayList<Pair<Class<? extends Guide>, Class<? extends Block>[]>> getGuides() {
         return guides;
     }
 
     public Guide[] getInteractionGuides(SchematicBlockState state) {
-        ArrayList<Tuple<Class<? extends Guide>, Class<? extends Block>[]>> guides = getGuides();
+        ArrayList<Pair<Class<? extends Guide>, Class<? extends Block>[]>> guides = getGuides();
 
         ArrayList<Guide> applicableGuides = new ArrayList<>();
-        for (Tuple<Class<? extends Guide>, Class<? extends Block>[]> guidePair : guides) {
+        for (Pair<Class<? extends Guide>, Class<? extends Block>[]> guidePair : guides) {
             try {
-                if (guidePair.getB().length == 0) {
+                if (guidePair.getRight().length == 0) {
                     applicableGuides
-                            .add(guidePair.getA().getConstructor(SchematicBlockState.class).newInstance(state));
+                            .add(guidePair.getLeft().getConstructor(SchematicBlockState.class).newInstance(state));
                     continue;
                 }
 
-                for (Class<? extends Block> clazz : guidePair.getB()) {
+                for (Class<? extends Block> clazz : guidePair.getRight()) {
                     if (clazz.isInstance(state.targetState.getBlock())) {
                         applicableGuides
-                                .add(guidePair.getA().getConstructor(SchematicBlockState.class).newInstance(state));
+                                .add(guidePair.getLeft().getConstructor(SchematicBlockState.class).newInstance(state));
                     }
                 }
             } catch (Exception ignored) {
