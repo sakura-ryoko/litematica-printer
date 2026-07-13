@@ -1,5 +1,6 @@
 package me.aleksilassila.litematica.printer.guides.placement;
 
+import me.aleksilassila.litematica.printer.Printer;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
@@ -53,31 +54,7 @@ public class GuesserGuide extends GeneralPlacementGuide {
         if (contextCache != null && !Configs.PRINT_DEBUG.getBooleanValue())
             return contextCache;
 
-        // First, try air placement if enabled
         boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
-        if (printInAir && !getRequiresSupport()) {
-            ItemStack requiredItem = getRequiredItem(player).orElse(ItemStack.EMPTY);
-            int slot = getRequiredItemStackSlot(player);
-
-            if (slot != -1) {
-                // Try different directions to find a successful placement
-                for (Direction side : directionsToTry) {
-                    Vec3 hitVec = Vec3.atCenterOf(state.blockPos);
-                    BlockHitResult hitResult = new BlockHitResult(hitVec, side.getOpposite(), state.blockPos, false);
-
-                    boolean requiresShift = getRequiresExplicitShift() || isInteractive(state.world.getBlockState(state.blockPos.relative(side.getOpposite())).getBlock());
-                    PrinterPlacementContext context = new PrinterPlacementContext(player, hitResult, requiredItem, slot, null, requiresShift);
-                    BlockState result = getRequiredItemAsBlock(player)
-                            .orElse(targetState.getBlock())
-                            .getStateForPlacement(context);
-
-                    if (result != null && (statesEqual(result, targetState) || correctChestPlacement(targetState, result))) {
-                        contextCache = context;
-                        return context;
-                    }
-                }
-            }
-        }
 
         ItemStack requiredItem = getRequiredItem(player).orElse(ItemStack.EMPTY);
         int slot = getRequiredItemStackSlot(player);
@@ -91,8 +68,8 @@ public class GuesserGuide extends GeneralPlacementGuide {
                 BlockState neighborState = state.world.getBlockState(neighborPos);
                 boolean requiresShift = getRequiresExplicitShift() || isInteractive(neighborState.getBlock());
 
-                if (!canBeClicked(state.world, neighborPos) || // Handle unclickable grass for example
-                        neighborState.canBeReplaced())
+                if (!(printInAir && !getRequiresSupport()) && (!canBeClicked(state.world, neighborPos) ||
+                        neighborState.canBeReplaced()))
                     continue;
 
                 Vec3 hitVec = Vec3.atCenterOf(state.blockPos)
@@ -103,8 +80,9 @@ public class GuesserGuide extends GeneralPlacementGuide {
                     multiplier = new Vec3(multiplier.x == 0 ? 1 : 0, multiplier.y == 0 ? 1 : 0,
                             multiplier.z == 0 ? 1 : 0);
 
+                    BlockPos hitPos = (printInAir && !getRequiresSupport()) ? state.blockPos : neighborPos;
                     BlockHitResult hitResult = new BlockHitResult(hitVec.add(hitVecToTry.multiply(multiplier)),
-                            side.getOpposite(), neighborPos, false);
+                            side.getOpposite(), hitPos, false);
                     PrinterPlacementContext context = new PrinterPlacementContext(player, hitResult, requiredItem, slot,
                             lookDirection, requiresShift);
                     BlockState result = getRequiredItemAsBlock(player)
@@ -115,6 +93,8 @@ public class GuesserGuide extends GeneralPlacementGuide {
                     if (result != null
                             && (statesEqual(result, targetState) || correctChestPlacement(targetState, result))) {
                         contextCache = context;
+                        Printer.printDebug("Cached context: side={} neighbor={} lookDir={}",
+                                side, neighborPos, lookDirection);
                         return context;
                     }
                 }
