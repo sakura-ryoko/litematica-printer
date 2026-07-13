@@ -21,8 +21,18 @@ public class GuiConfigsMixin {
         return Configs.getConfigList();
     }
 
+    @Redirect(method = "getAllConfigs", at = @At(value = "FIELD", target = "Lfi/dy/masa/litematica/config/Configs$Generic;OPTIONS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.GETSTATIC))
+    private ImmutableList<IConfigBase> moreOptionsAll() {
+        return Configs.getConfigList();
+    }
+
     @Redirect(method = "getConfigs", at = @At(value = "FIELD", target = "Lfi/dy/masa/litematica/config/Hotkeys;HOTKEY_LIST:Ljava/util/List;", opcode = Opcodes.GETSTATIC))
     private List<ConfigHotkey> moreHotkeys() {
+        return Hotkeys.getHotkeyList();
+    }
+
+    @Redirect(method = "getAllConfigs", at = @At(value = "FIELD", target = "Lfi/dy/masa/litematica/config/Hotkeys;HOTKEY_LIST:Ljava/util/List;", opcode = Opcodes.GETSTATIC))
+    private List<ConfigHotkey> moreHotkeysAll() {
         return Hotkeys.getHotkeyList();
     }
 }
