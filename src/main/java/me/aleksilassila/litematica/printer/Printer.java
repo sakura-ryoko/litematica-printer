@@ -59,6 +59,9 @@ public class Printer {
         findBlock:
         for (BlockPos position : positions) {
             SchematicBlockState state = new SchematicBlockState(player.level(), worldSchematic, position);
+            if (!state.targetState.isAir()) {
+                printDebug("Considering {} target={} current={}", position, state.targetState, state.currentState);
+            }
             if (state.targetState.equals(state.currentState) || state.targetState.isAir()) {
                 continue;
             }
@@ -71,7 +74,8 @@ public class Printer {
             for (Guide guide : guides) {
                 // Add INTERACT_BLOCKS pull by DarkReaper231
                 if (guide.canExecute(player) && Configs.INTERACT_BLOCKS.getBooleanValue()) {
-                    printDebug("Executing {} for {}", guide, state);
+                    printDebug("PLACING {} at {} via {}", state.targetState.getBlock(), position, guide.getClass().getSimpleName());
+                    printDebug("  targetState={} currentState={} isAir={}", state.targetState, state.currentState, state.targetState.isAir());
                     List<Action> actions = guide.execute(player);
                     actionHandler.addActions(actions.toArray(Action[]::new));
                     return true;
