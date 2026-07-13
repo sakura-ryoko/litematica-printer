@@ -7,7 +7,6 @@ import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContex
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.phys.BlockHitResult;
@@ -103,13 +102,6 @@ public class GeneralPlacementGuide extends PlacementGuide {
     }
 
     private Optional<Vec3> getHitVector(SchematicBlockState state) {
-        boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
-
-        if (printInAir && !getRequiresSupport()) {
-            // For air placement, target the center of the target block position
-            return Optional.of(Vec3.atCenterOf(state.blockPos));
-        }
-
         return getValidSide(state).map(side -> Vec3.atCenterOf(state.blockPos)
                 .add(Vec3.atLowerCornerOf(side.getUnitVec3i()).scale(0.5))
                 .add(getHitModifier(side)));
@@ -129,36 +121,8 @@ public class GeneralPlacementGuide extends PlacementGuide {
             Optional<Direction> lookDirection = getLookDirection();
             boolean requiresShift = getUseShift(state);
 
-            boolean printInAir = Configs.PRINT_IN_AIR.getBooleanValue();
-            BlockHitResult blockHitResult;
-
-            if (printInAir && !getRequiresSupport()) {
-                // For air placement, target the block position directly
-                // Use a hit side that allows the block to maintain its intended orientation
-                // The specific side depends on the block type and its intended orientation
-                Direction hitSide = validSide.get().getOpposite(); // Use the opposite of the valid side to maintain orientation
-
-                // For pillar blocks like logs, we need to be more specific about the hit side
-                if (targetState.hasProperty(RotatedPillarBlock.AXIS)) {
-                    // For pillar blocks, use a side perpendicular to the intended axis
-                    Direction.Axis axis = targetState.getValue(RotatedPillarBlock.AXIS);
-                    if (axis == Direction.Axis.Y) {
-                        hitSide = Direction.DOWN; // vertical log - hit from above
-                    } else if (axis == Direction.Axis.X) {
-                        hitSide = Direction.WEST; // horizontal log along X - hit from West/East side
-                    } else { // Z axis
-                        hitSide = Direction.NORTH; // horizontal log along Z - hit from North/South side
-                    }
-                } else {
-                    // For non-pillars, use DOWN as default to place normally
-                    hitSide = Direction.DOWN;
-                }
-
-                blockHitResult = new BlockHitResult(hitVec.get(), hitSide, state.blockPos, false);
-            } else {
-                blockHitResult = new BlockHitResult(hitVec.get(), validSide.get().getOpposite(),
-                        state.blockPos.relative(validSide.get()), false);
-            }
+            BlockHitResult blockHitResult = new BlockHitResult(hitVec.get(), validSide.get().getOpposite(),
+                    state.blockPos.relative(validSide.get()), false);
 
             return new PrinterPlacementContext(player, blockHitResult, requiredItem.get(), requiredSlot,
                     lookDirection.orElse(null), requiresShift);
