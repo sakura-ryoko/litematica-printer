@@ -163,7 +163,7 @@ public class GeneralPlacementGuide extends PlacementGuide {
             return new PrinterPlacementContext(player, blockHitResult, requiredItem.get(), requiredSlot,
                     lookDirection.orElse(null), requiresShift);
         } catch (Exception e) {
-            Printer.logger.error("getPlacementContext(): Exception caught: {}", e.getMessage());
+            Printer.LOGGER.error("getPlacementContext(): Exception caught: {}", e.getMessage());
             //e.printStackTrace();
             return null;
         }

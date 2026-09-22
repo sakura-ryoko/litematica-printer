@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Printer {
-    public static final Logger logger = LogManager.getLogger(PrinterReference.MOD_ID);
+    public static final Logger LOGGER = LogManager.getLogger(PrinterReference.MOD_ID);
     @Nonnull
     public final LocalPlayer player;
     public final ActionHandler actionHandler;
@@ -123,9 +123,11 @@ public class Printer {
                 }).toList();
     }
 
-    public static void printDebug(String key, Object... args) {
-        if (Configs.PRINT_DEBUG.getBooleanValue()) {
-            logger.info(key, args);
+    public static void printDebug(String key, Object... args)
+    {
+        if (Configs.PRINT_DEBUG.getBooleanValue())
+        {
+            LOGGER.info(key, args);
         }
     }
 }

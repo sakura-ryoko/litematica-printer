@@ -30,7 +30,7 @@ public class Guides {
         registerGuide(FlowerPotFillGuide.class, FlowerPotBlock.class);
 
         registerGuide(PropertySpecificGuesserGuide.class,
-                RepeaterBlock.class, ComparatorBlock.class, RedStoneWireBlock.class, RedstoneTorchBlock.class,
+                RepeaterBlock.class, ComparatorBlock.class, RedstoneWireBlock.class, RedstoneTorchBlock.class,
                 BambooStalkBlock.class, CactusBlock.class, SaplingBlock.class, ScaffoldingBlock.class,
                 PointedDripstoneBlock.class,
                 CrossCollisionBlock.class, DoorBlock.class, TrapDoorBlock.class, FenceGateBlock.class,

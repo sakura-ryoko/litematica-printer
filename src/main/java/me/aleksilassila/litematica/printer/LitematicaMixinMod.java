@@ -10,6 +10,6 @@ public class LitematicaMixinMod implements ModInitializer {
     @Override
     public void onInitialize() {
         KeyCallbacks.init(Minecraft.getInstance());
-        Printer.logger.info("{} initialized.", PrinterReference.MOD_STRING);
+        Printer.LOGGER.info("{} initialized.", PrinterReference.MOD_STRING);
     }
 }
