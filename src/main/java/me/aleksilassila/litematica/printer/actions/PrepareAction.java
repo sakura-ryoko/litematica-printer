@@ -78,8 +78,7 @@ public class PrepareAction extends Action {
                 float yaw = modifyYaw ? this.yaw : player.getYRot();
                 float pitch = modifyPitch ? this.pitch : player.getXRot();
 
-                ServerboundMovePlayerPacket packet = new ServerboundMovePlayerPacket.PosRot(player.getX(), player.getY(), player.getZ(), yaw,
-                        pitch, player.onGround(), player.horizontalCollision);
+                ServerboundMovePlayerPacket packet = new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.onGround(), player.horizontalCollision);
 
                 player.connection.send(packet);
             }
