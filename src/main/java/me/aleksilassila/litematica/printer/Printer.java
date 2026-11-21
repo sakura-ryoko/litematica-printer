@@ -9,6 +9,7 @@ import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.config.Hotkeys;
 import me.aleksilassila.litematica.printer.guides.Guide;
 import me.aleksilassila.litematica.printer.guides.Guides;
+import me.aleksilassila.litematica.printer.materials.MaterialListSync;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -74,6 +75,9 @@ public class Printer {
                     printDebug("Executing {} for {}", guide, state);
                     List<Action> actions = guide.execute(player);
                     actionHandler.addActions(actions.toArray(Action[]::new));
+                    if (!actions.isEmpty()) {
+                        MaterialListSync.onPrintQueued(player.level(), position, state.targetState);
+                    }
                     return true;
                 }
                 if (guide.skipOtherGuides()) {

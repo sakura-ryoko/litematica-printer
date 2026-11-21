@@ -7,6 +7,7 @@ import me.aleksilassila.litematica.printer.LitematicaMixinMod;
 import me.aleksilassila.litematica.printer.Printer;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import me.aleksilassila.litematica.printer.UpdateChecker;
+import me.aleksilassila.litematica.printer.materials.MaterialListSync;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -63,6 +64,8 @@ public class MixinClientPlayerEntity extends AbstractClientPlayer {
             }
             LitematicaMixinMod.printer.actionHandler.onGameTick();
         }
+
+        MaterialListSync.clientTick(clientPlayer);
     }
 
     @Unique

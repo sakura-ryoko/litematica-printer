@@ -8,6 +8,7 @@
     "litematica-printer.config.generic.name.interactBlocks": "interactBlocks",
     "litematica-printer.config.generic.name.printInAir": "printInAir",
     "litematica-printer.config.generic.name.rotate": "rotate",
+    "litematica-printer.config.generic.name.materialListSync": "materialListSync",
 
     "litematica-printer.config.generic.prettyName.printingInterval": "Printing Interval",
     "litematica-printer.config.generic.prettyName.printingRange": "Printing Range",
@@ -18,6 +19,7 @@
     "litematica-printer.config.generic.prettyName.interactBlocks": "Interact Blocks",
     "litematica-printer.config.generic.prettyName.printInAir": "Print in Air",
     "litematica-printer.config.generic.prettyName.rotate": "Rotate",
+    "litematica-printer.config.generic.prettyName.materialListSync": "Sync Material List",
 
     "litematica-printer.config.generic.comment.printingInterval": "Printing interval. Lower values mean faster printing speed.\nIf the printer creates \"ghost blocks\" or blocks are facing the wrong way, raise this value.",
     "litematica-printer.config.generic.comment.printingRange": "Printing block place range\nLower values are recommended for servers.",
@@ -28,6 +30,7 @@
     "litematica-printer.config.generic.comment.interactBlocks": "Whether or not the printer should set block states.",
     "litematica-printer.config.generic.comment.printInAir": "Allow blocks to be placed in mid-air without requiring support blocks underneath.",
     "litematica-printer.config.generic.comment.rotate": "Alter the players yaw and pitch when placing blocks.",
+    "litematica-printer.config.generic.comment.materialListSync": "Decrease the schematic's 'missing' counts when the printer places blocks,\nso the material list gap does not grow just because items are consumed.",
 
     "litematica-printer.config.hotkeys.name.print": "print",
     "litematica-printer.config.hotkeys.name.togglePrintingMode": "togglePrintingMode",
