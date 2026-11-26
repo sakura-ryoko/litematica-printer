@@ -7,6 +7,8 @@ import me.aleksilassila.litematica.printer.LitematicaMixinMod;
 import me.aleksilassila.litematica.printer.Printer;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import me.aleksilassila.litematica.printer.UpdateChecker;
+import me.aleksilassila.litematica.printer.actions.PendingPlacements;
+import me.aleksilassila.litematica.printer.actions.SneakControl;
 import me.aleksilassila.litematica.printer.materials.MaterialListSync;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -54,6 +56,8 @@ public class MixinClientPlayerEntity extends AbstractClientPlayer {
         if (LitematicaMixinMod.printer == null || LitematicaMixinMod.printer.player != clientPlayer) {
             Printer.printDebug("Initializing printer, player: {}, client: {}", clientPlayer, minecraft);
             LitematicaMixinMod.printer = new Printer(minecraft, clientPlayer);
+            PendingPlacements.reset();
+            SneakControl.reset();
         }
 
         // Dirty optimization
@@ -66,6 +70,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayer {
         }
 
         MaterialListSync.clientTick(clientPlayer);
+        PendingPlacements.clientTick(clientPlayer);
     }
 
     @Unique
