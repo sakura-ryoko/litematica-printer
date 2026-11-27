@@ -13,7 +13,7 @@ public class Configs {
     private static final String GENERIC_KEY = PrinterReference.MOD_KEY + ".config.generic";
 
     // Configs settings
-    public static final ConfigInteger PRINTING_INTERVAL = new ConfigInteger("printingInterval", 12, 1, 40).apply(GENERIC_KEY);
+    public static final ConfigInteger PLACEMENT_RATE = new ConfigInteger("placementRate", 16, 1, 20).apply(GENERIC_KEY);
     public static final ConfigDouble PRINTING_RANGE = new ConfigDouble("printingRange", 5, 2.5, 5).apply(GENERIC_KEY);
     public static final ConfigBoolean PRINT_MODE = new ConfigBoolean("printingMode", false).apply(GENERIC_KEY);
     public static final ConfigBoolean PRINT_DEBUG = new ConfigBoolean("printingDebug", false).apply(GENERIC_KEY);
@@ -28,7 +28,7 @@ public class Configs {
         List<IConfigBase> list = new java.util.ArrayList<>(fi.dy.masa.litematica.config.Configs.Generic.OPTIONS);
         list.add(PRINT_MODE);
         list.add(PRINT_DEBUG);
-        list.add(PRINTING_INTERVAL);
+        list.add(PLACEMENT_RATE);
         list.add(PRINTING_RANGE);
         list.add(REPLACE_FLUIDS_SOURCE_BLOCKS);
         list.add(STRIP_LOGS);

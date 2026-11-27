@@ -12,6 +12,15 @@ import java.util.List;
 import java.util.Queue;
 
 public class ActionHandler {
+    /**
+     * {@link #onGameTick()} is called this many times per game tick, see
+     * {@code MixinClientPlayerEntity}. The placement clock below counts calls, so the two
+     * have to stay in sync.
+     */
+    public static final int CALLS_PER_TICK = 10;
+
+    private static final int TICKS_PER_SECOND = 20;
+
     private final Minecraft client;
     private final LocalPlayer player;
     private final Queue<Action> actionQueue = new LinkedList<>();
@@ -25,10 +34,10 @@ public class ActionHandler {
     private int tick = 0;
 
     public void onGameTick() {
-        int tickRate = Configs.PRINTING_INTERVAL.getIntegerValue();
-        tick = tick % tickRate == tickRate - 1 ? 0 : tick + 1;
+        int callsPerPlacement = getCallsPerPlacement();
+        tick = tick % callsPerPlacement == callsPerPlacement - 1 ? 0 : tick + 1;
 
-        if (tick % tickRate != 0) {
+        if (tick % callsPerPlacement != 0) {
             return;
         }
 
@@ -59,6 +68,18 @@ public class ActionHandler {
     private void send(Action action) {
         Printer.printDebug("Sending action {}", action);
         action.send(client, player);
+    }
+
+    /**
+     * Converts the configured placement rate (blocks per second) into the number of
+     * {@link #onGameTick()} calls between two placements. One placement costs one call,
+     * and the printer never places more than one block per game tick.
+     */
+    private static int getCallsPerPlacement() {
+        int rate = Math.max(1, Configs.PLACEMENT_RATE.getIntegerValue());
+        int calls = (int) Math.round((double) (TICKS_PER_SECOND * CALLS_PER_TICK) / rate);
+
+        return Math.max(CALLS_PER_TICK, calls);
     }
 
     public boolean acceptsActions() {

@@ -3,6 +3,7 @@ package me.aleksilassila.litematica.printer.implementation.mixin;
 import com.mojang.authlib.GameProfile;
 import fi.dy.masa.litematica.world.SchematicWorldHandler;
 import fi.dy.masa.litematica.world.WorldSchematic;
+import me.aleksilassila.litematica.printer.ActionHandler;
 import me.aleksilassila.litematica.printer.LitematicaMixinMod;
 import me.aleksilassila.litematica.printer.Printer;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
@@ -62,7 +63,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayer {
 
         // Dirty optimization
         boolean didFindPlacement = true;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < ActionHandler.CALLS_PER_TICK; i++) {
             if (didFindPlacement) {
                 didFindPlacement = LitematicaMixinMod.printer.onGameTick();
             }
