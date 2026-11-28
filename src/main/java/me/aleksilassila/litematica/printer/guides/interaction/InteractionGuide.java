@@ -3,7 +3,6 @@ package me.aleksilassila.litematica.printer.guides.interaction;
 import me.aleksilassila.litematica.printer.SchematicBlockState;
 import me.aleksilassila.litematica.printer.actions.Action;
 import me.aleksilassila.litematica.printer.actions.PrepareAction;
-import me.aleksilassila.litematica.printer.actions.ReleaseShiftAction;
 import me.aleksilassila.litematica.printer.guides.Guide;
 import me.aleksilassila.litematica.printer.implementation.PrinterPlacementContext;
 import me.aleksilassila.litematica.printer.implementation.actions.InteractActionImpl;
@@ -38,7 +37,6 @@ public abstract class InteractionGuide extends Guide {
 
         PrinterPlacementContext ctx = new PrinterPlacementContext(player, hitResult, requiredItem, requiredSlot);
 
-        actions.add(new ReleaseShiftAction());
         actions.add(new PrepareAction(ctx));
         actions.add(new InteractActionImpl(ctx));
 

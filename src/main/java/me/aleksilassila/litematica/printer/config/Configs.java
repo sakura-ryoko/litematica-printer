@@ -13,7 +13,7 @@ public class Configs {
     private static final String GENERIC_KEY = PrinterReference.MOD_KEY + ".config.generic";
 
     // Configs settings
-    public static final ConfigInteger PRINTING_INTERVAL = new ConfigInteger("printingInterval", 12, 1, 40).apply(GENERIC_KEY);
+    public static final ConfigInteger PLACEMENT_RATE = new ConfigInteger("placementRate", 12, 1, 20).apply(GENERIC_KEY);
     public static final ConfigDouble PRINTING_RANGE = new ConfigDouble("printingRange", 5, 2.5, 5).apply(GENERIC_KEY);
     public static final ConfigBoolean PRINT_MODE = new ConfigBoolean("printingMode", false).apply(GENERIC_KEY);
     public static final ConfigBoolean PRINT_DEBUG = new ConfigBoolean("printingDebug", false).apply(GENERIC_KEY);
@@ -22,18 +22,20 @@ public class Configs {
     public static final ConfigBoolean INTERACT_BLOCKS = new ConfigBoolean("interactBlocks", true).apply(GENERIC_KEY);
     public static final ConfigBoolean PRINT_IN_AIR = new ConfigBoolean("printInAir", false).apply(GENERIC_KEY);
     public static final ConfigBoolean ROTATE = new ConfigBoolean("rotate", true).apply(GENERIC_KEY);
+    public static final ConfigBoolean MATERIAL_LIST_SYNC = new ConfigBoolean("materialListSync", true).apply(GENERIC_KEY);
 
     public static ImmutableList<IConfigBase> getConfigList() {
         List<IConfigBase> list = new java.util.ArrayList<>(fi.dy.masa.litematica.config.Configs.Generic.OPTIONS);
         list.add(PRINT_MODE);
         list.add(PRINT_DEBUG);
-        list.add(PRINTING_INTERVAL);
+        list.add(PLACEMENT_RATE);
         list.add(PRINTING_RANGE);
         list.add(REPLACE_FLUIDS_SOURCE_BLOCKS);
         list.add(STRIP_LOGS);
         list.add(INTERACT_BLOCKS);
         list.add(PRINT_IN_AIR);
         list.add(ROTATE);
+        list.add(MATERIAL_LIST_SYNC);
 
         return ImmutableList.copyOf(list);
     }

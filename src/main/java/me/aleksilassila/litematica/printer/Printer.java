@@ -5,10 +5,12 @@ import fi.dy.masa.litematica.util.RayTraceUtils;
 import fi.dy.masa.litematica.world.SchematicWorldHandler;
 import fi.dy.masa.litematica.world.WorldSchematic;
 import me.aleksilassila.litematica.printer.actions.Action;
+import me.aleksilassila.litematica.printer.actions.PendingPlacements;
 import me.aleksilassila.litematica.printer.config.Configs;
 import me.aleksilassila.litematica.printer.config.Hotkeys;
 import me.aleksilassila.litematica.printer.guides.Guide;
 import me.aleksilassila.litematica.printer.guides.Guides;
+import me.aleksilassila.litematica.printer.materials.MaterialListSync;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -63,6 +65,13 @@ public class Printer {
                 continue;
             }
 
+            // A placement for this position is already on its way to the server, so
+            // looking at it again would only queue a duplicate. Move on to the next
+            // position instead of waiting for the client world to catch up.
+            if (PendingPlacements.isUnconfirmed(player.level(), position)) {
+                continue;
+            }
+
             Guide[] guides = interactionGuides.getInteractionGuides(state);
 
             BlockHitResult result = RayTraceUtils.traceToSchematicWorld(player, 10, true, true);
@@ -74,6 +83,10 @@ public class Printer {
                     printDebug("Executing {} for {}", guide, state);
                     List<Action> actions = guide.execute(player);
                     actionHandler.addActions(actions.toArray(Action[]::new));
+                    if (!actions.isEmpty()) {
+                        PendingPlacements.markQueued(player.level(), position, state.currentState, state.targetState);
+                        MaterialListSync.onPrintQueued(player.level(), position, state.targetState);
+                    }
                     return true;
                 }
                 if (guide.skipOtherGuides()) {

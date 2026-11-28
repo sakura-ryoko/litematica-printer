@@ -7,9 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
-import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Input;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import fi.dy.masa.litematica.util.InventoryUtils;
@@ -78,20 +76,13 @@ public class PrepareAction extends Action {
                 float yaw = modifyYaw ? this.yaw : player.getYRot();
                 float pitch = modifyPitch ? this.pitch : player.getXRot();
 
-                ServerboundMovePlayerPacket packet = new ServerboundMovePlayerPacket.PosRot(player.getX(), player.getY(), player.getZ(), yaw,
-                        pitch, player.onGround(), player.horizontalCollision);
+                ServerboundMovePlayerPacket packet = new ServerboundMovePlayerPacket.Rot(yaw, pitch, player.onGround(), player.horizontalCollision);
 
                 player.connection.send(packet);
             }
         }
 
-        if (context.shouldSneak) {
-            player.input.keyPresses = new Input(player.input.keyPresses.forward(), player.input.keyPresses.backward(), player.input.keyPresses.left(), player.input.keyPresses.right(), player.input.keyPresses.jump(), true, player.input.keyPresses.sprint());
-            player.connection.send(new ServerboundPlayerInputPacket(player.input.keyPresses));
-        } else {
-            player.input.keyPresses = new Input(player.input.keyPresses.forward(), player.input.keyPresses.backward(), player.input.keyPresses.left(), player.input.keyPresses.right(), player.input.keyPresses.jump(), false, player.input.keyPresses.sprint());
-            player.connection.send(new ServerboundPlayerInputPacket(player.input.keyPresses));
-        }
+        SneakControl.set(player, context.shouldSneak);
     }
 
     private void addPickBlock(Inventory inv, ItemStack stack) {
