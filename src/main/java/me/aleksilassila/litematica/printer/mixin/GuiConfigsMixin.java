@@ -25,4 +25,16 @@ public class GuiConfigsMixin {
     private List<ConfigHotkey> moreHotkeys() {
         return Hotkeys.getHotkeyList();
     }
+
+    // The "all" tab builds its list in getAllConfigs() instead of getConfigs(), so the options
+    // above are missing there unless that method reads the same extended lists.
+    @Redirect(method = "getAllConfigs", require = 0, at = @At(value = "FIELD", target = "Lfi/dy/masa/litematica/config/Configs$Generic;OPTIONS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.GETSTATIC))
+    private ImmutableList<IConfigBase> moreOptionsForAllTab() {
+        return Configs.getConfigList();
+    }
+
+    @Redirect(method = "getAllConfigs", require = 0, at = @At(value = "FIELD", target = "Lfi/dy/masa/litematica/config/Hotkeys;HOTKEY_LIST:Ljava/util/List;", opcode = Opcodes.GETSTATIC))
+    private List<ConfigHotkey> moreHotkeysForAllTab() {
+        return Hotkeys.getHotkeyList();
+    }
 }
